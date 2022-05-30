@@ -26,9 +26,13 @@ class UpdateProfile extends FormRequest
         $id = auth()->user()->id;
         return [
             'name' => 'string',
-            'username' => 'string|unique:users,username,'.$id,
-            'phone' => 'string|min:11|max:11|unique:users,phone,'.$id,
-            'password' => 'string|min:6'
+            'phone' => 'string|min:11|max:11|unique:users,phone',
+            'logo' => 'string',
+            'birth_date' => 'string',
+            'country' => 'string',
+            'city' => 'string',
+            'gender' => 'string',
+            'password' => 'string|min:6',
         ];
     }
 }

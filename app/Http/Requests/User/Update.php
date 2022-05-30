@@ -26,10 +26,15 @@ class Update extends FormRequest
         $id = $this->route('user');
         return [
             'name' => 'string',
-            'username' => 'string|unique:users,username,'.$id,
-            'phone' => 'string|min:11|max:11|unique:users,phone,'.$id,
-            'password' => 'string',
+            'phone' => 'string|min:11|max:11|unique:users,phone'. $id,
+            'logo' => 'string',
+            'birth_date' => 'string',
+            'country' => 'string',
+            'city' => 'string',
+            'gender' => 'string',
+            'password' => 'string|min:6',
             'rule_id' => 'integer|exists:rules,id',
+            'gym_id' => 'integer|exists:gyms,id',
         ];
     }
 }
