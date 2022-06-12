@@ -23,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // config(['services.google.redirect'=> request()->get('host').'/auth/google/callback']);
     }
 }

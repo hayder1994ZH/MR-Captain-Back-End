@@ -7,6 +7,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -70,11 +71,17 @@ class Handler extends ExceptionHandler
                 'message' => 'model not found',
             ], 404);
         }
-
+        if ($exception instanceof NotFoundHttpException) 
+        {
+            return response()->json([
+                'message' => 'route not found',
+            ], 404);
+        }
         //catch any exception of any API
         return response()->json(
             [
-                'message' => $exception->getMessage()
+                // 'message' => 'internal server error',
+                'message' => ($exception->getMessage()) ? $exception->getMessage() : 'internal server error',
             ],
             500
         );

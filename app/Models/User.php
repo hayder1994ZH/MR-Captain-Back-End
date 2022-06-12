@@ -6,44 +6,36 @@ use App\Helpers\Utilities;
 use App\Models\RelationshipsTrait;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable, RelationshipsTrait, SoftDeletes;
+    use Notifiable, RelationshipsTrait;
 
     protected $fillable = [
         'id',
         'name',
+        'username',
         'phone',
         'password',
         'image',
-        'status',
-        'country',
-        'city',
-        'gender',
-        'birth_date',
         'rule_id',
-        'gym_id',
         'created_at',
         'updated_at'
     ];
     protected $relations = [
-        'gym', 'rule'
+        'reels', 'rule', 'followers', 'followings'
     ];
     protected $hidden = [
         'password',
         'image',
+        'is_deleted',
         'remember_token',
         'email_verified_at',
     ];
     protected $casts = [
-        'rule_id' => 'int',
-        'gym_id' => 'int',
+        'reel_id' => 'int',
         'status' => 'boolean',
-        'birth_date' => 'datetime',
         'email_verified_at' => 'datetime',
     ];
     public function getJWTIdentifier()
@@ -55,17 +47,42 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
     protected $appends = [
-       'image_url' 
+       'image_url',
+         'is_followed'
     ];
     public function getImageUrlAttribute()
     {
-        return $this->image ? asset('public') . $this->image : null;
+        return $this->image ? request()->get('host') . Utilities::$imageBucket . $this->image : null;
+    }
+    public function getIsFollowedAttribute()
+    {
+        if(auth()->user()->id == $this->id) {
+            return true;
+        }
+        $YouAreFollowed = Followers::where(function($query) {
+            $query->where('sender_id', auth()->user()->id)
+                ->where('receiver_id', $this->id)
+                ->where('status', 0);
+                })->orwhere(function($query) {
+                    $query->where('sender_id', $this->id)
+                        ->where('receiver_id', auth()->user()->id)
+                        ->where('status', 0);
+            })->first();
+        return $YouAreFollowed ? true : false;
     }
 
     //Relations
-    public function gym()
+    public function reels()
     {
-        return $this->belongsTo(Gym::class);
+        return $this->hasMany(Reels::class);
+    }
+    public function followings()
+    {
+        return $this->hasMany(Followers::class, 'sender_id');
+    }
+    public function followers()
+    {
+        return $this->hasMany(Followers::class, 'receiver_id');
     }
     public function rule()
     {

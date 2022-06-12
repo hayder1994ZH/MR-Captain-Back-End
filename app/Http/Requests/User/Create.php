@@ -25,15 +25,10 @@ class Create extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'username' => 'required|string|unique:users,username',
             'phone' => 'required|string|min:11|max:11|unique:users,phone',
-            'logo' => 'string',
-            'birth_date' => 'required|string',
-            'country' => 'required|string',
-            'city' => 'required|string',
-            'gender' => 'required|string',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string',
             'rule_id' => 'required|integer|exists:rules,id',
-            'gym_id' => 'required|integer|exists:gyms,id',
         ];
     }
 }
