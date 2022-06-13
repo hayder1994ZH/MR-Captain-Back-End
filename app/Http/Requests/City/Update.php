@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Splash;
+namespace App\Http\Requests\City;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Create extends FormRequest
+class Update extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class Create extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-            'voice' => 'required|mimes:mp3,wav',
-            'end_date' => 'string|max:255',
+            'name' => 'string|max:255',
+            'country_id' => 'integer|exists:countries,id',
         ];
     }
 }

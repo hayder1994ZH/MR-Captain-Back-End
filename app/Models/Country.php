@@ -6,7 +6,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Rules extends Model
+class Country extends Model
 {
     use SoftDeletes;
     protected $fillable = [
@@ -16,16 +16,5 @@ class Rules extends Model
     {
         return $date->format('Y-m-d h:i:s');
     }
-    protected $relations = [
-        'users',
-    ];
-    protected $hidden = [
-        'is_deleted',
-    ];
-    //Relations
-    public function users()
-    {
-        return $this->hasMany(User::class, 'rule_id');
-    }
-
+    protected $relations = [];
 }

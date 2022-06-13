@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVersionsTable extends Migration
+class CreateRulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,17 +14,9 @@ class CreateVersionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('versions', function (Blueprint $table) {
+        Schema::create('rules', function (Blueprint $table) {
             $table->id();
-            $table->string('version')->nullable();
-            $table->string('android_url')->nullable();
-            $table->boolean('android_public')->default(0);
-            $table->boolean('android_active')->default(0);
-            $table->boolean('android_cache')->default(0);
-            $table->string('ios_url')->nullable();
-            $table->boolean('ios_public')->default(0);
-            $table->boolean('ios_active')->default(0);
-            $table->boolean('ios_cache')->default(0);
+            $table->string('name')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
@@ -38,6 +30,6 @@ class CreateVersionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('versions');
+        Schema::dropIfExists('rules');
     }
 }

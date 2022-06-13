@@ -30,6 +30,8 @@ class Update extends FormRequest
             'phone' => 'string|min:11|max:11|unique:users,phone,'.$id,
             'password' => 'string',
             'rule_id' => 'integer|exists:rules,id',
+            'city_id' => 'integer|exists:cities,id',
+            'gym_id' => 'string|exists:gyms,uuid',
         ];
     }
 }

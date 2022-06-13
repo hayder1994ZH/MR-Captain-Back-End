@@ -16,17 +16,15 @@ class CreateNotificationsTable extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
+            $table->string('content')->nullable();
             $table->morphs('reference');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('publish_user_id')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-            $table->boolean('is_deleted')->default(0);
+            $table->softDeletes();
 
             //foreign keys
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('publish_user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

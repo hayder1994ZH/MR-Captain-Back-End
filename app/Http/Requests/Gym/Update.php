@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Chats;
+namespace App\Http\Requests\Gym;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddUserToGroup extends FormRequest
+class Update extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class AddUserToGroup extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|integer|exists:users,id',
-            'chat_id' => 'required|integer|exists:chats,id'
+            'name' => 'string|max:255',
+            'logo' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'city_id' => 'integer|exists:cities,id',
         ];
     }
 }

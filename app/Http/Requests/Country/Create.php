@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Chats;
+namespace App\Http\Requests\Country;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Update extends FormRequest
+class Create extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class Update extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class Update extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:255',
         ];
     }
 }

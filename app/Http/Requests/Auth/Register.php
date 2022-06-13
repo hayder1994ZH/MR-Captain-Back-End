@@ -25,9 +25,9 @@ class Register extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'username' => 'required|string|unique:users,username',
             'phone' => 'required|string|min:11|max:11|unique:users,phone',
             'password' => 'required|string|min:6',
+            'city_id' => 'required|integer|exists:cities,id',
         ];
     }
 }

@@ -6,26 +6,26 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Rules extends Model
+class City extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'name', 'created_at', 'update_at'
+        'id', 'name', 'country_id', 'created_at', 'update_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d h:i:s');
     }
     protected $relations = [
-        'users',
+        'country'
     ];
-    protected $hidden = [
-        'is_deleted',
+    protected $casts = [
+        'country_id' => 'int',
     ];
-    //Relations
-    public function users()
-    {
-        return $this->hasMany(User::class, 'rule_id');
-    }
 
+    //Relations
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }

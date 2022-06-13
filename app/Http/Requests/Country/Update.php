@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Reels;
+namespace App\Http\Requests\Country;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Create extends FormRequest
+class Update extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class Create extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'nullable|string',
-            'description' => 'nullable|string',
-            'videoUrl' => 'required|file',
+            'name' => 'string|max:255',
         ];
     }
 }

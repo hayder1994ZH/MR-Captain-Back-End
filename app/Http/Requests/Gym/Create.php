@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Followers;
+namespace App\Http\Requests\Gym;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +24,9 @@ class Create extends FormRequest
     public function rules()
     {
         return [
-            'receiver_id' => 'required|integer|exists:users,id'
+            'name' => 'required|string|max:255',
+            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'city_id' => 'required|integer|exists:cities,id',
         ];
     }
 }

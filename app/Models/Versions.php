@@ -4,9 +4,11 @@ namespace App\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Versions extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
        'id', 
        'version' ,

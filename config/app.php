@@ -164,6 +164,7 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Elasticquent\ElasticquentServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Ladumor\OneSignal\OneSignalServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -233,6 +234,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class, 
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'OneSignal' => \Ladumor\OneSignal\OneSignal::class,
         // 'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
