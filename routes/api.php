@@ -15,7 +15,6 @@ use App\Http\Controllers\Auth\AuthController;
 
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/register', [AuthController::class, 'register']);
-Route::get('auth/first/request', [AuthController::class, 'firstRequest']);
 Route::get('public/version', [VersionsController::class, 'index']);
 Route::group(['middleware' => ['admin']], function() {
     Route::get('auth/logout', [AuthController::class, 'logout']);

@@ -28,6 +28,11 @@ class Register extends FormRequest
             'phone' => 'required|string|min:11|max:11|unique:users,phone',
             'password' => 'required|string|min:6',
             'city_id' => 'required|integer|exists:cities,id',
+            'gender' => 'required|string|max:255',
+            'brithday' => 'nullable|string',
+            'notes' => 'nullable|string',
+            'long' => 'required|string',
+            'lat' => 'required|string'
         ];
     }
 }

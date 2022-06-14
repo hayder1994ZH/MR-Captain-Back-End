@@ -26,10 +26,17 @@ class UpdateProfile extends FormRequest
         $id = auth()->user()->id;
         return [
             'name' => 'string',
-            'phone' => 'string|min:11|max:11|unique:users,phone,'.$id,
-            'password' => 'string|min:6',
+            'phone' => 'string|min:11|max:11|unique:users,phone',
+            'password' => 'string',
+            'rule_id' => 'integer|exists:rules,id',
             'city_id' => 'integer|exists:cities,id',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'gym_id' => 'string|exists:gyms,uuid',
+            'gender' => 'string|max:255',
+            'brithday' => 'nullable|string',
+            'notes' => 'nullable|string',
+            'long' => 'nullable|string',
+            'lat' => 'nullable|string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ];
     }
 }

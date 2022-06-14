@@ -26,12 +26,17 @@ class Update extends FormRequest
         $id = $this->route('user');
         return [
             'name' => 'string',
-            'username' => 'string|unique:users,username,'.$id,
-            'phone' => 'string|min:11|max:11|unique:users,phone,'.$id,
+            'phone' => 'string|min:11|max:11|unique:users,phone',
             'password' => 'string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
             'rule_id' => 'integer|exists:rules,id',
             'city_id' => 'integer|exists:cities,id',
             'gym_id' => 'string|exists:gyms,uuid',
+            'gender' => 'string|max:255',
+            'brithday' => 'nullable|string',
+            'notes' => 'nullable|string',
+            'long' => 'nullable|string',
+            'lat' => 'nullable|string'
         ];
     }
 }

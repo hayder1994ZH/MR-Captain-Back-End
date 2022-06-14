@@ -78,29 +78,4 @@ class AuthController extends Controller
     {
         return auth()->user();
     }
-
-    //First request 
-    public function firstRequest()
-    {
-        $str = Str::random(16);
-        $name = 'user' . $str;
-        $user = [
-            'name' => $name,
-            'username' => $name.'@vodu.com',
-            'password' => bcrypt(Str::random(32).'fack'. Str::random(32)),
-            'rule_id' => 3,
-        ];
-        $userAccount = $this->authRepo->create($user);
-        // $userAcc = $this->show($userAccount->id);
-        JWTAuth::factory()->setTTL(60 * 24 * 360 * 20);
-        if (!$token = JWTAuth::fromUser($userAccount)) {
-            return ['message' =>  'invalid_credentials', 'code' => 401];
-        }
-        return response()->json([
-            'token' => $token,
-            'success' => true,
-            'message' => 'Could not create token.',
-            'userAuth' => auth()->user(),
-        ], 200);
-    }
 }
