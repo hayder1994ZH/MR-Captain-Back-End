@@ -35,5 +35,4 @@ class Cards extends Model
     {
         return $this->belongsTo(Gym::class, 'gym_id', 'uuid');
     }
-
 }
