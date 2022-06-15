@@ -3,32 +3,35 @@
 namespace App\Models;
 
 use DateTimeInterface;
+use App\Helpers\Utilities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class City extends Model
+class WeightHistory extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'name', 'country_id', 'created_at', 'update_at'
+        'id', 'weight', 'date', 'user_id', 'created_at', 'update_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d h:i:s');
     }
     protected $relations = [
-        'country'
+        'user'
     ];
     protected $hidden = [
         'deleted_at',
     ];
     protected $casts = [
-        'country_id' => 'int',
+        'user_id' => 'integer',
+        'date' => 'datetime',
     ];
 
-    //Relations
-    public function country()
+    //relationships
+    public function user()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(User::class);
     }
+
 }

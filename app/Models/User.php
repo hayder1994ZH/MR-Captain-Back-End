@@ -42,6 +42,7 @@ class User extends Authenticatable implements JWTSubject
         'image',
         'remember_token',
         'email_verified_at',
+        'deleted_at',
     ];
     protected $casts = [
         'city_id' => 'int',

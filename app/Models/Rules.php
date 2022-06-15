@@ -20,7 +20,7 @@ class Rules extends Model
         'users',
     ];
     protected $hidden = [
-        'is_deleted',
+        'deleted_at',
     ];
     //Relations
     public function users()

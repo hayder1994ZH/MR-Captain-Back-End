@@ -20,7 +20,7 @@ class Gym extends Model
     }
     protected $relations = [];
     protected $appends = [
-        'logo_url',
+        'logo_url', 'deleted_at'
     ];
     public function getLogoUrlAttribute()
     {

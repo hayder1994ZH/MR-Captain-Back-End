@@ -28,7 +28,7 @@ class Versions extends Model
         return $date->format('Y-m-d h:i:s');
     }
     protected $hidden = [
-        'is_deleted',
+        'deleted_at',
     ];
     protected $relations = [];
     protected $casts = [

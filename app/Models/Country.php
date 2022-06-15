@@ -12,6 +12,9 @@ class Country extends Model
     protected $fillable = [
         'id', 'name', 'created_at', 'update_at'
     ];
+    protected $hidden = [
+        'deleted_at',
+    ];
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d h:i:s');

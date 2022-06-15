@@ -16,6 +16,9 @@ class Notifications extends Model
     {
         return $date->format('Y-m-d h:i:s');
     }
+    protected $hidden = [
+        'deleted_at',
+    ];
     protected $relations = [
         'user', 'reference', 'reference.user'
     ];
