@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CardsController;
 use App\Http\Controllers\VersionsController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\WeightHistoryController;
@@ -23,6 +24,7 @@ Route::group(['middleware' => ['admin']], function() {
     Route::get('auth/details', [AuthController::class, 'details']);
     Route::put('auth/profile', [AuthController::class, 'update']);
     Route::get('my/weight/histories', [WeightHistoryController::class, 'getMyWeightHistories']);
+    Route::get('my/cards', [CardsController::class, 'getMyCards']);
     Route::apiResource('user', 'UserController');
     Route::apiResource('rule', 'RulesController');
     Route::apiResource('gym', 'GymController');
@@ -30,4 +32,5 @@ Route::group(['middleware' => ['admin']], function() {
     Route::apiResource('city', 'CityController');
     Route::apiResource('country', 'CountryController');
     Route::apiResource('weight/history', 'WeightHistoryController');
+    Route::apiResource('card', 'CardsController');
 });

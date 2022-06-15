@@ -3,29 +3,27 @@
 namespace App\Models;
 
 use DateTimeInterface;
-use App\Helpers\Utilities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class WeightHistory extends Model
+class Cards extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'weight', 'date', 'user_id', 'created_at', 'update_at'
+        'id', 'name', 'price', 'days', 'user_id', 'gym_id', 'created_at', 'update_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d h:i:s');
     }
     protected $relations = [
-        'user'
+        'user', 'gym'
     ];
     protected $hidden = [
         'deleted_at',
     ];
     protected $casts = [
         'user_id' => 'integer',
-        'date' => 'datetime',
     ];
 
     //relationships
@@ -33,4 +31,9 @@ class WeightHistory extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function gym()
+    {
+        return $this->belongsTo(Gym::class, 'gym_id', 'uuid');
+    }
+
 }

@@ -73,7 +73,7 @@ class User extends Authenticatable implements JWTSubject
     }
     public function gym()
     {
-        return $this->belongsTo(Gym::class);
+        return $this->belongsTo(Gym::class, 'gym_id', 'uuid');
     }
     public function city()
     {

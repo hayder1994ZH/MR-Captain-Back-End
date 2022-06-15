@@ -18,9 +18,12 @@ class Gym extends Model
     {
         return $date->format('Y-m-d h:i:s');
     }
+    protected $hidden = [
+        'deleted_at', 
+    ];
     protected $relations = [];
     protected $appends = [
-        'logo_url', 'deleted_at'
+        'logo_url'
     ];
     public function getLogoUrlAttribute()
     {

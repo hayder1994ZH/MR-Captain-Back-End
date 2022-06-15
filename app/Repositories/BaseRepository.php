@@ -33,6 +33,15 @@ Abstract class BaseRepository{
                                 ->allowedSorts($this->getProperties());
         return $result->paginate($take);
     } 
+    //Base repo to get all items for my gym
+    public function getListMyGym($take = 10){
+        $result = QueryBuilder::for($this->model)
+                                ->allowedIncludes($this->getRelationMethod())
+                                ->allowedFilters($this->getProperties())
+                                ->allowedSorts($this->getProperties())
+                                ->where('gym_id', auth()->user()->gym->uuid);
+        return $result->paginate($take);
+    } 
     //Base repo to get item by id
     public function show($id){
         return QueryBuilder::for($this->model)
