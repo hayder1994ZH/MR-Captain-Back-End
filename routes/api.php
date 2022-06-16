@@ -5,6 +5,7 @@ use App\Http\Controllers\CardsController;
 use App\Http\Controllers\VersionsController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\WeightHistoryController;
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ Route::group(['middleware' => ['admin']], function() {
     Route::get('my/weight/histories', [WeightHistoryController::class, 'getMyWeightHistories']);
     Route::get('my/cards', [CardsController::class, 'getMyCards']);
     Route::get('my/subscriptions', [SubscriptionController::class, 'getMySubscriptions']);
+    Route::get('my/advertisements', [AdvertisementController::class, 'getMyadvertisements']);
     Route::apiResource('user', 'UserController');
     Route::apiResource('rule', 'RulesController');
     Route::apiResource('gym', 'GymController');
@@ -36,4 +38,5 @@ Route::group(['middleware' => ['admin']], function() {
     Route::apiResource('weight/history', 'WeightHistoryController');
     Route::apiResource('card', 'CardsController');
     Route::apiResource('subscription', 'SubscriptionController');
+    Route::apiResource('advertisement', 'AdvertisementController');
 });

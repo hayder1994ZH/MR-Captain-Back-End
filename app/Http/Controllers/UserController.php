@@ -41,7 +41,7 @@ class UserController extends Controller
         $user = $request->validated();
         $user['password'] = bcrypt($request->password);
         if($request->hasFile('image')){
-            $user['image'] = $request->file('image')->store('');
+            $user['image'] = $request->file('image')->store('avatars');
         }
         return $this->UserRepo->create($user);
     }
@@ -71,7 +71,7 @@ class UserController extends Controller
             $user['password'] = bcrypt($user['password']);
         }
         if($request->hasFile('image')){
-            $user['image'] = $request->file('image')->store('');
+            $user['image'] = $request->file('image')->store('avatars');
         }
         $this->UserRepo->update($id, $user);
         return response()->json([

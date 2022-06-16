@@ -54,7 +54,7 @@ class AuthController extends Controller
             $data['password'] = bcrypt($request->password);
         }
         if($request->hasFile('image')){
-            $data['image'] = $request->file('image')->store('');
+            $data['image'] = $request->file('image')->store('avatars');
         }
         $this->authRepo->update($user->id, $data);
         return response()->json([

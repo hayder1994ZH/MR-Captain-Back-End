@@ -40,7 +40,7 @@ class GymController extends Controller
     {
         $gym = $request->validated();
         if($request->hasFile('logo')){
-            $gym['logo'] = $request->file('logo')->store('');
+            $gym['logo'] = $request->file('logo')->store('gym-logo');
         }
         $gym['uuid'] =  Str::uuid();
         $response = $this->GymRepo->create($gym);
@@ -73,6 +73,9 @@ class GymController extends Controller
     public function update(Update $request, $id)
     {
         $gym = $request->validated();
+        if($request->hasFile('logo')){
+            $gym['logo'] = $request->file('logo')->store('gym-logo');
+        }
         $this->GymRepo->update($id, $gym);
         return response()->json([
             'success' => true,
