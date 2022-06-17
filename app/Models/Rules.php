@@ -3,14 +3,12 @@
 namespace App\Models;
 
 use DateTimeInterface;
-use App\Models\RelationshipsTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Rules extends Model
 {
-    use HasFactory, RelationshipsTrait, SoftDeletes;
+    use SoftDeletes;
     protected $fillable = [
         'id', 'name', 'created_at', 'update_at'
     ];
@@ -21,7 +19,9 @@ class Rules extends Model
     protected $relations = [
         'users',
     ];
-
+    protected $hidden = [
+        'deleted_at',
+    ];
     //Relations
     public function users()
     {

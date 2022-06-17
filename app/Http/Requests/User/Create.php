@@ -26,14 +26,16 @@ class Create extends FormRequest
         return [
             'name' => 'required|string',
             'phone' => 'required|string|min:11|max:11|unique:users,phone',
-            'logo' => 'string',
-            'birth_date' => 'required|string',
-            'country' => 'required|string',
-            'city' => 'required|string',
-            'gender' => 'required|string',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
             'rule_id' => 'required|integer|exists:rules,id',
-            'gym_id' => 'required|integer|exists:gyms,id',
+            'city_id' => 'required|integer|exists:cities,id',
+            'gym_id' => 'required|string|exists:gyms,uuid',
+            'gender' => 'required|string|max:255',
+            'brithday' => 'nullable|string',
+            'notes' => 'nullable|string',
+            'long' => 'nullable|string',
+            'lat' => 'nullable|string'
         ];
     }
 }

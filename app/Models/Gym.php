@@ -3,45 +3,35 @@
 namespace App\Models;
 
 use DateTimeInterface;
-use App\Models\RelationshipsTrait;
+use App\Helpers\Utilities;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Gym extends Model
 {
-    use HasFactory, RelationshipsTrait, SoftDeletes;
+    use SoftDeletes;
     protected $fillable = [
-        'id', 'name', 'phone', 'logo', 'gender', 'country', 'city', 'is_ads', 'is_active', 'created_at', 'update_at'
+        'id', 'name', 'uuid', 'logo', 'long', 'lat', 'city_id', 'is_ads', 'is_active', 'created_at', 'update_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d h:i:s');
     }
-    protected $relations = [
-        'users',
-    ];
-
     protected $hidden = [
-        'logo'
+        'deleted_at', 
     ];
-
+    protected $relations = [];
     protected $appends = [
-        'logo_url' 
+        'logo_url'
     ];
     public function getLogoUrlAttribute()
     {
-        return $this->logo ? asset('public') . $this->logo : null;
+        return $this->logo ? request()->get('host') . Utilities::$imageBucket . $this->logo : null;
     }
-
     protected $casts = [
         'is_ads' => 'boolean',
         'is_active' => 'boolean',
+        'city_id' => 'integer',
     ];
-    
-    //Relations
-    public function users()
-    {
-        return $this->hasMany(User::class);
-    }
 }

@@ -27,12 +27,16 @@ class UpdateProfile extends FormRequest
         return [
             'name' => 'string',
             'phone' => 'string|min:11|max:11|unique:users,phone',
-            'logo' => 'string',
-            'birth_date' => 'string',
-            'country' => 'string',
-            'city' => 'string',
-            'gender' => 'string',
-            'password' => 'string|min:6',
+            'password' => 'string',
+            'rule_id' => 'integer|exists:rules,id',
+            'city_id' => 'integer|exists:cities,id',
+            'gym_id' => 'string|exists:gyms,uuid',
+            'gender' => 'string|max:255',
+            'brithday' => 'nullable|string',
+            'notes' => 'nullable|string',
+            'long' => 'nullable|string',
+            'lat' => 'nullable|string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ];
     }
 }

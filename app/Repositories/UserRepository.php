@@ -8,4 +8,8 @@ class UserRepository extends BaseRepository{
     {
         parent::__construct(new User());
     }
+    public function checkUserExists($userId)
+    {
+        return $this->model->where('id', $userId)->first();
+    }
 }

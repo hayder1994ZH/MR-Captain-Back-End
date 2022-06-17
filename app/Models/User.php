@@ -7,12 +7,11 @@ use App\Models\RelationshipsTrait;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable, RelationshipsTrait, SoftDeletes;
+    use Notifiable, RelationshipsTrait, SoftDeletes;
 
     protected $fillable = [
         'id',
@@ -20,30 +19,35 @@ class User extends Authenticatable implements JWTSubject
         'phone',
         'password',
         'image',
-        'status',
-        'country',
-        'city',
+        'long', 
+        'lat', 
+        'notes',
+        'include_player_ids',
+        'email_verified_at',
+        'remember_token',
+        'birthday',
         'gender',
-        'birth_date',
         'rule_id',
         'gym_id',
+        'city_id',
+        'status',
         'created_at',
         'updated_at'
     ];
     protected $relations = [
-        'gym', 'rule'
+        'rule', 'gym', 'city', 'city.country'
     ];
     protected $hidden = [
         'password',
         'image',
         'remember_token',
         'email_verified_at',
+        'deleted_at',
     ];
     protected $casts = [
+        'city_id' => 'int',
         'rule_id' => 'int',
-        'gym_id' => 'int',
         'status' => 'boolean',
-        'birth_date' => 'datetime',
         'email_verified_at' => 'datetime',
     ];
     public function getJWTIdentifier()
@@ -55,20 +59,24 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
     protected $appends = [
-       'image_url' 
+       'image_url',
     ];
     public function getImageUrlAttribute()
     {
-        return $this->image ? asset('public') . $this->image : null;
+        return $this->image ? request()->get('host') . Utilities::$imageBucket . $this->image : null;
     }
 
     //Relations
-    public function gym()
-    {
-        return $this->belongsTo(Gym::class);
-    }
     public function rule()
     {
         return $this->belongsTo(Rules::class);
+    }
+    public function gym()
+    {
+        return $this->belongsTo(Gym::class, 'gym_id', 'uuid');
+    }
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 }
