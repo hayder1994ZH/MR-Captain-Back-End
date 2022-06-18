@@ -94,4 +94,10 @@ class UserController extends Controller
             'message' => 'User deleted successfully',
         ], Response::HTTP_OK);
     }
+
+    public function getMyGymUsers(Pagination $request)
+    {
+        $request->validated();
+        return $this->UserRepo->getListMyGym($request->take);
+    }
 }
