@@ -39,4 +39,5 @@ Route::group(['middleware' => ['admin']], function() {
     Route::apiResource('card', 'CardsController');
     Route::apiResource('subscription', 'SubscriptionController');
     Route::apiResource('advertisement', 'AdvertisementController');
+    Route::apiResource('music', 'MusicController');
 });
