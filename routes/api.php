@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CardsController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\VersionsController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\SubscriptionController;
@@ -29,6 +30,8 @@ Route::group(['middleware' => ['admin']], function() {
     Route::get('my/cards', [CardsController::class, 'getMyCards']);
     Route::get('my/subscriptions', [SubscriptionController::class, 'getMySubscriptions']);
     Route::get('my/advertisements', [AdvertisementController::class, 'getMyadvertisements']);
+    Route::get('my/purchases', [PurchaseController::class, 'getMyPurchases']);
+    Route::get('total/my/purchases', [PurchaseController::class, 'getMyPurchaseTotalPrice']);
     Route::apiResource('user', 'UserController');
     Route::apiResource('rule', 'RulesController');
     Route::apiResource('gym', 'GymController');
@@ -40,4 +43,5 @@ Route::group(['middleware' => ['admin']], function() {
     Route::apiResource('subscription', 'SubscriptionController');
     Route::apiResource('advertisement', 'AdvertisementController');
     Route::apiResource('music', 'MusicController');
+    Route::apiResource('purchase', 'PurchaseController');
 });
