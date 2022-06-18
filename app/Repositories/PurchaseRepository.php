@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use App\Models\Sale;
 use App\Models\Purchase;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -24,7 +25,7 @@ class PurchaseRepository extends BaseRepository{
                                 ->where('gym_id', auth()->user()->gym->uuid)
                                 ->whereBetween('created_at', [$fromDate, $toDate])
                                 ->sum('price');
-        $sales = QueryBuilder::for($this->model)
+        $sales = QueryBuilder::for(Sale::class)
                                 ->where('gym_id', auth()->user()->gym->uuid)
                                 ->whereBetween('created_at', [$fromDate, $toDate])
                                 ->sum('price');
