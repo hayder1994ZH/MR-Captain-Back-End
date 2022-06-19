@@ -10,16 +10,6 @@ class PurchaseRepository extends BaseRepository{
     {
         parent::__construct(new Purchase());
     }
-    //Base repo to get all items
-    public function myPurchase($take = 10){
-        $result = QueryBuilder::for($this->model)
-                                ->allowedIncludes($this->getRelationMethod())
-                                ->allowedFilters($this->getProperties())
-                                ->allowedSorts($this->getProperties())
-                                ->where('gym_id', auth()->user()->gym->uuid);
-        return $result->paginate($take);
-    } 
-
     public function myPurchaseSumPriceBetweenTowDate($fromDate, $toDate){
         $purchase = QueryBuilder::for($this->model)
                                 ->where('gym_id', auth()->user()->gym->uuid)
@@ -30,9 +20,14 @@ class PurchaseRepository extends BaseRepository{
                                 ->whereBetween('created_at', [$fromDate, $toDate])
                                 ->sum('price');
         $profits = $purchase - $sales;
+        $debts = QueryBuilder::for(Debts::class)
+                                ->where('gym_id', auth()->user()->gym->uuid)
+                                ->whereBetween('created_at', [$fromDate, $toDate])
+                                ->sum('price');
         return [
             'purchase' => $purchase,
             'sales' => $sales,
+            'debts' => $debts,
             'profits' => $profits
         ];
     }

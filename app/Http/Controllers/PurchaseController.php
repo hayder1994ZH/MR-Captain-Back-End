@@ -38,7 +38,7 @@ class PurchaseController extends Controller
     public function getMyPurchase(Pagination $request)
     {
         $request->validated();
-        return $this->PurchaseRepo->myPurchase($request->take);
+        return $this->PurchaseRepo->getListMyGym($request->take);
     }
 
     /**

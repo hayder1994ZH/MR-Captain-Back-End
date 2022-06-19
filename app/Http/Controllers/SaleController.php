@@ -37,7 +37,7 @@ class SaleController extends Controller
     public function getMySales(Pagination $request)
     {
         $request->validated();
-        return $this->SaleRepo->mySales($request->take);
+        return $this->SaleRepo->getListMyGym($request->take);
     }
 
     /**

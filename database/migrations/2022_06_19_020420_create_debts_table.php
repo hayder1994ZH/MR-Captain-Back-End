@@ -17,7 +17,7 @@ class CreateDebtsTable extends Migration
         Schema::create('debts', function (Blueprint $table) {
             $table->id();
             $table->string('details')->nullable();
-            $table->string('price')->nullable();
+            $table->string('price')->default(0);
             $table->string('gym_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('player_id')->nullable();

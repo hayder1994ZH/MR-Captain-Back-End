@@ -26,7 +26,7 @@ class DebtsController extends Controller
     public function index(Pagination $request)
     {
         $request->validated();
-        return $this->DebtsRepo->getList($request->take);
+        return $this->DebtsRepo->getListDebts($request->take, $request->player_id);
     }
 
     /**

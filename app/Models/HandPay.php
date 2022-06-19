@@ -6,18 +6,18 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Debts extends Model
+class HandPay extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'details', 'price', 'user_id', 'gym_id', 'player_id', 'created_at', 'update_at'
+        'id', 'details', 'old_price', 'current_price', 'price', 'user_id', 'gym_id', 'player_id', 'debt_id', 'created_at', 'update_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d h:i:s');
     }
     protected $relations = [
-        'captain', 'gym', 'player', 'handPay'
+        'captain', 'gym', 'player', 'debt'
     ];
     protected $hidden = [
         'deleted_at',
@@ -36,9 +36,9 @@ class Debts extends Model
     {
         return $this->belongsTo(User::class, 'player_id');
     }
-    public function handPay()
+    public function debt()
     {
-        return $this->hasMany(HandPay::class, 'debt_id');
+        return $this->belongsTo(Debts::class, 'debt_id');
     }
     public function gym()
     {

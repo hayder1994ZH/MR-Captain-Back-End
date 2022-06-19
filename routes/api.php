@@ -5,6 +5,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CardsController;
 use App\Http\Controllers\DebtsController;
+use App\Http\Controllers\HandPayController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\VersionsController;
 use App\Http\Controllers\Auth\AuthController;
@@ -34,9 +35,10 @@ Route::group(['middleware' => ['admin']], function() {
     Route::get('my/cards', [CardsController::class, 'getMyCards']);
     Route::get('my/subscriptions', [SubscriptionController::class, 'getMySubscriptions']);
     Route::get('my/advertisements', [AdvertisementController::class, 'getMyadvertisements']);
-    Route::get('my/purchases', [PurchaseController::class, 'getMyPurchases']);
+    Route::get('my/purchases', [PurchaseController::class, 'getMyPurchase']);
     Route::get('my/sales', [SaleController::class, 'getMySales']);
     Route::get('my/debts', [DebtsController::class, 'getMyDebts']);
+    Route::get('my/hand/pay', [HandPayController::class, 'getMyDebts']);
     Route::get('total/my/purchases', [PurchaseController::class, 'getMyPurchaseTotalPrice']);
     Route::apiResource('user', 'UserController');
     Route::apiResource('rule', 'RulesController');
@@ -52,4 +54,5 @@ Route::group(['middleware' => ['admin']], function() {
     Route::apiResource('purchase', 'PurchaseController');
     Route::apiResource('sale', 'SaleController');
     Route::apiResource('debt', 'DebtsController');
+    Route::apiResource('hand/pay', 'HandPayController');
 });
