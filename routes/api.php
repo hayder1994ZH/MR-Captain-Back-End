@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DayController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CardsController;
@@ -40,6 +41,7 @@ Route::group(['middleware' => ['admin']], function() {
     Route::get('my/sales', [SaleController::class, 'getMySales']);
     Route::get('my/debts', [DebtsController::class, 'getMyDebts']);
     Route::get('my/gym/course', [CourseController::class, 'getMyGymCourses']);
+    Route::get('my/gym/day', [DayController::class, 'getMyGymDays']);
     Route::get('my/course', [CourseController::class, 'getMyCourses']);
     Route::get('my/hand/pay', [HandPayController::class, 'getMyDebts']);
     Route::get('total/my/purchases', [PurchaseController::class, 'getMyPurchaseTotalPrice']);
@@ -59,4 +61,5 @@ Route::group(['middleware' => ['admin']], function() {
     Route::apiResource('debt', 'DebtsController');
     Route::apiResource('hand/pay', 'HandPayController');
     Route::apiResource('course', 'CourseController');
+    Route::apiResource('day', 'DayController');
 });

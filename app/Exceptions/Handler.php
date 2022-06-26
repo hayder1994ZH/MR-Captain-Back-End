@@ -6,6 +6,7 @@ use Throwable;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Elasticsearch\Common\Exceptions\Forbidden403Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -77,10 +78,15 @@ class Handler extends ExceptionHandler
                 'message' => 'route not found',
             ], 404);
         }
-        //catch any exception of any API
+        if ($exception instanceof Forbidden403Exception) 
+        {
+            return response()->json([
+                'message' => 'permission denid',
+            ], 403);
+        }
+        //catch any exception of any API 
         return response()->json(
             [
-                // 'message' => 'internal server error',
                 'message' => ($exception->getMessage()) ? $exception->getMessage() : 'internal server error',
             ],
             500
