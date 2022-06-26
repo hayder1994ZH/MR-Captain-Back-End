@@ -5,6 +5,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CardsController;
 use App\Http\Controllers\DebtsController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HandPayController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\VersionsController;
@@ -38,6 +39,8 @@ Route::group(['middleware' => ['admin']], function() {
     Route::get('my/purchases', [PurchaseController::class, 'getMyPurchase']);
     Route::get('my/sales', [SaleController::class, 'getMySales']);
     Route::get('my/debts', [DebtsController::class, 'getMyDebts']);
+    Route::get('my/gym/course', [CourseController::class, 'getMyGymCourses']);
+    Route::get('my/course', [CourseController::class, 'getMyCourses']);
     Route::get('my/hand/pay', [HandPayController::class, 'getMyDebts']);
     Route::get('total/my/purchases', [PurchaseController::class, 'getMyPurchaseTotalPrice']);
     Route::apiResource('user', 'UserController');
@@ -55,4 +58,5 @@ Route::group(['middleware' => ['admin']], function() {
     Route::apiResource('sale', 'SaleController');
     Route::apiResource('debt', 'DebtsController');
     Route::apiResource('hand/pay', 'HandPayController');
+    Route::apiResource('course', 'CourseController');
 });

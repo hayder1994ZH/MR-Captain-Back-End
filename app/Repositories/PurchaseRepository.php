@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\Sale;
+use App\Models\Debts;
 use App\Models\Purchase;
 use Spatie\QueryBuilder\QueryBuilder;
 
