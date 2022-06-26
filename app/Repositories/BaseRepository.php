@@ -66,4 +66,12 @@ Abstract class BaseRepository{
     {
         return $model->delete();
     }
+    //base repo to delete item
+    public function gym($uuid){
+        $gym = $this->model->where('gym_id', $uuid)->first();
+        if($gym->uuid == $uuid){
+            return true;
+        }
+        return false;
+    }
 }

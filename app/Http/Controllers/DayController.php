@@ -50,7 +50,6 @@ class DayController extends Controller
     public function store(Create $request)
     {
         $day = $request->validated();
-        $day['captain_id'] = auth()->user()->id;
         $day['gym_id'] = auth()->user()->gym->uuid;
         $response = $this->DayRepo->create($day);
         return response()->json([

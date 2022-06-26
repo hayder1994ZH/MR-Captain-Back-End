@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Muscle;
+use App\Models\Push;
 use App\Helpers\Utilities;
-use Illuminate\Http\Request;
-use App\Http\Requests\Muscle\Create;
-use App\Http\Requests\Muscle\Update;
-use App\Repositories\MuscleRepository;
+use App\Http\Requests\Push\Create;
+use App\Http\Requests\Push\Update;
+use App\Repositories\PushRepository;
 use App\Http\Requests\Index\Pagination;
 use Symfony\Component\HttpFoundation\Response;
 
-class MuscleController extends Controller
+class PushController extends Controller
 {
-    private $MuscleRepo;
-    public function __construct(MuscleRepository $MuscleRepo)
+    private $PushRepo;
+    public function __construct(PushRepository $PushRepo)
     {
-        $this->MuscleRepo = $MuscleRepo;
+        $this->PushRepo = $PushRepo;
     }
     
     /**
@@ -27,18 +26,18 @@ class MuscleController extends Controller
     public function index(Pagination $request)
     {
         $request->validated();
-        return $this->MuscleRepo->getList($request->take);
+        return $this->PushRepo->getList($request->take);
     }
 
     /**
-     * Display a listing of my gym Muscles.
+     * Display a listing of my gym Pushs.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getMyGymMuscles(Pagination $request)
+    public function getMyGymPushes(Pagination $request)
     {
         $request->validated();
-        return $this->MuscleRepo->getListMyGym($request->take);
+        return $this->PushRepo->getListMyGym($request->take);
     }
 
     /**
@@ -49,12 +48,12 @@ class MuscleController extends Controller
      */
     public function store(Create $request)
     {
-        $Muscle = $request->validated();
-        $Muscle['gym_id'] = auth()->user()->gym->uuid;
-        $response = $this->MuscleRepo->create($Muscle);
+        $push = $request->validated();
+        $push['gym_id'] = auth()->user()->gym->uuid;
+        $response = $this->PushRepo->create($push);
         return response()->json([
             'success' => true,
-            'message' => 'Muscle created successfully',
+            'message' => 'Push created successfully',
             'data' => $response
 
         ], Response::HTTP_OK);
@@ -63,38 +62,38 @@ class MuscleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Muscle  $id
+     * @param  \App\Models\Push  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return $this->MuscleRepo->show($id);
+        return $this->PushRepo->show($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Muscle  $id
+     * @param  \App\Models\Push  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Update $request, $id)
     {
-        $muscle = $request->validated();
-        $this->MuscleRepo->update($id, $muscle);
+        $push = $request->validated();
+        $this->PushRepo->update($id, $push);
         return response()->json([
             'success' => true,
-            'message' => 'Muscle updated successfully',
+            'message' => 'Push updated successfully',
         ], Response::HTTP_OK);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Muscle  $muscle
+     * @param  \App\Models\Push  $Push
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Muscle $muscle)
+    public function destroy(Push $push)
     {
         if(!Utilities::admin() && !Utilities::captain()){
             return response()->json([
@@ -102,10 +101,10 @@ class MuscleController extends Controller
                 'message' => 'permission denied',
             ], Response::HTTP_FORBIDDEN);
         }
-        $this->MuscleRepo->delete($muscle);
+        $this->PushRepo->delete($push);
         return response()->json([
             'success' => true,
-            'message' => 'Muscle deleted successfully',
+            'message' => 'Push deleted successfully',
         ], Response::HTTP_OK);
     }
 }

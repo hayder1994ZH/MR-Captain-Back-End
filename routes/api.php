@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DayController;
+use App\Http\Controllers\PushController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CardsController;
@@ -43,6 +44,7 @@ Route::group(['middleware' => ['admin']], function() {
     Route::get('my/debts', [DebtsController::class, 'getMyDebts']);
     Route::get('my/gym/course', [CourseController::class, 'getMyGymCourses']);
     Route::get('my/gym/day', [DayController::class, 'getMyGymDays']);
+    Route::get('my/gym/push', [PushController::class, 'getMyGymPushes']);
     Route::get('my/gym/muscle', [MuscleController::class, 'getMyGymMuscles']);
     Route::get('my/course', [CourseController::class, 'getMyCourses']);
     Route::get('my/hand/pay', [HandPayController::class, 'getMyDebts']);
@@ -65,4 +67,5 @@ Route::group(['middleware' => ['admin']], function() {
     Route::apiResource('course', 'CourseController');
     Route::apiResource('day', 'DayController');
     Route::apiResource('muscle', 'MuscleController');
+    Route::apiResource('push', 'PushController');
 });
