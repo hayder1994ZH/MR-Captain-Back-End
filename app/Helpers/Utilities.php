@@ -9,67 +9,30 @@ class Utilities{
     public static $audioBucket = '/storage/';
     public static $imageBucket = '/storage/';
     public static $videoBucket = '/storage/';
-    public static $videoBucketObject = 'live_videos';
-    public static $audioBucketObject = 'live_audio';
-    public static $imagesBucketObject = 'live_images';
+
+    public static function owner(){
+        if(auth()->user()->rule->name == 'owner'){
+            return true;
+        }
+        return false;
+    }
+    public static function admin(){
+        if(auth()->user()->rule->name == 'admin'){
+            return true;
+        }
+        return false;
+    }
+    public static function captain(){
+        if(auth()->user()->rule->name == 'captain'){
+            return true;
+        }
+        return false;
+    }
+    public static function player(){
+        if(auth()->user()->rule->name == 'player'){
+            return true;
+        }
+        return false;
+    }
     
-    public static function filterMessage($request, $type){
-        $file = null;
-        if($request->hasFile('message') && ($type == 'image')){
-            $file = $request->file('message')->store('');
-            TempFiles::create([
-                'key' => $file,
-                'bucket' => self::$imagesBucketObject,
-                'table' => 'messages',
-            ]);
-        }
-        if($request->hasFile('message') && ($type == 'audio')){
-            $file = $request->file('message')->store('');
-            TempFiles::create([
-                'key' => $file,
-                'bucket' => self::$audioBucketObject,
-                'table' => 'messages',
-            ]);
-        }
-        if($request->hasFile('message') && ($type == 'video')){
-            $file = $request->file('message')->store('');
-            TempFiles::create([
-                'key' => $file,
-                'bucket' => self::$videoBucketObject,
-                'table' => 'messages',
-            ]);
-        }
-        if(($type == 'text')){
-            $file = $request->message;
-        }
-        return $file;
-    }
-    public static function uploadFiles($request, $type, $table, $keyFile){
-        $file = null;
-        if($request->hasFile($keyFile) && ($type == 'image')){
-            $file = $request->file($keyFile)->store('');
-            TempFiles::create([
-                'key' => $file,
-                'bucket' => self::$imagesBucketObject,
-                'table' => $table,
-            ]);
-        }
-        if($request->hasFile($keyFile) && ($type == 'video')){
-            $file = $request->file($keyFile)->store('');
-            TempFiles::create([
-                'key' => $file,
-                'bucket' => self::$videoBucketObject,
-                'table' => $table,
-            ]);
-        }
-        if($request->hasFile($keyFile) && ($type == 'audio')){
-            $file = $request->file($keyFile)->store('');
-            TempFiles::create([
-                'key' => $file,
-                'bucket' => self::$audioBucketObject,
-                'table' => $table,
-            ]);
-        }
-        return $file;
-    }
 }

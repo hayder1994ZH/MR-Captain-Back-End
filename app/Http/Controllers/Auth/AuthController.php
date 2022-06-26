@@ -38,11 +38,12 @@ class AuthController extends Controller
         $data = $request->validated();
         $data['password'] = bcrypt($request->password);
         $data['rule_id'] = 3;
-        $this->authRepo->create($data);
-        return response()->json([
-            'success' => true,
-            'message' => 'User created successfully',
-        ], Response::HTTP_OK);
+        $user = $this->authRepo->create($data);
+        $response = $this->authRepo->authenticate([
+            'phone' => $data['phone'],
+            'password' => $request->password
+        ]);
+        return response()->json($response[0], $response['code']);
     }
 
     //Update Profile

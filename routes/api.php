@@ -1,7 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CardsController;
+use App\Http\Controllers\DebtsController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\HandPayController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\VersionsController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\SubscriptionController;
@@ -25,10 +31,18 @@ Route::group(['middleware' => ['admin']], function() {
     Route::get('auth/logout', [AuthController::class, 'logout']);
     Route::get('auth/details', [AuthController::class, 'details']);
     Route::put('auth/profile', [AuthController::class, 'update']);
+    Route::get('my/gym/users', [UserController::class, 'getMyGymUsers']);
     Route::get('my/weight/histories', [WeightHistoryController::class, 'getMyWeightHistories']);
     Route::get('my/cards', [CardsController::class, 'getMyCards']);
     Route::get('my/subscriptions', [SubscriptionController::class, 'getMySubscriptions']);
     Route::get('my/advertisements', [AdvertisementController::class, 'getMyadvertisements']);
+    Route::get('my/purchases', [PurchaseController::class, 'getMyPurchase']);
+    Route::get('my/sales', [SaleController::class, 'getMySales']);
+    Route::get('my/debts', [DebtsController::class, 'getMyDebts']);
+    Route::get('my/gym/course', [CourseController::class, 'getMyGymCourses']);
+    Route::get('my/course', [CourseController::class, 'getMyCourses']);
+    Route::get('my/hand/pay', [HandPayController::class, 'getMyDebts']);
+    Route::get('total/my/purchases', [PurchaseController::class, 'getMyPurchaseTotalPrice']);
     Route::apiResource('user', 'UserController');
     Route::apiResource('rule', 'RulesController');
     Route::apiResource('gym', 'GymController');
@@ -39,4 +53,10 @@ Route::group(['middleware' => ['admin']], function() {
     Route::apiResource('card', 'CardsController');
     Route::apiResource('subscription', 'SubscriptionController');
     Route::apiResource('advertisement', 'AdvertisementController');
+    Route::apiResource('music', 'MusicController');
+    Route::apiResource('purchase', 'PurchaseController');
+    Route::apiResource('sale', 'SaleController');
+    Route::apiResource('debt', 'DebtsController');
+    Route::apiResource('hand/pay', 'HandPayController');
+    Route::apiResource('course', 'CourseController');
 });
