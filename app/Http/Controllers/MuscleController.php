@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Day;
+use App\Models\Muscle;
 use App\Helpers\Utilities;
 use Illuminate\Http\Request;
-use App\Http\Requests\Day\Create;
-use App\Http\Requests\Day\Update;
-use App\Repositories\DayRepository;
+use App\Http\Requests\Muscle\Create;
+use App\Http\Requests\Muscle\Update;
+use App\Repositories\MuscleRepository;
 use App\Http\Requests\Index\Pagination;
 use Symfony\Component\HttpFoundation\Response;
 
-class DayController extends Controller
+class MuscleController extends Controller
 {
-    private $DayRepo;
-    public function __construct(DayRepository $DayRepo)
+    private $MuscleRepo;
+    public function __construct(MuscleRepository $MuscleRepo)
     {
-        $this->DayRepo = $DayRepo;
+        $this->MuscleRepo = $MuscleRepo;
     }
     
     /**
@@ -27,18 +27,18 @@ class DayController extends Controller
     public function index(Pagination $request)
     {
         $request->validated();
-        return $this->DayRepo->getList($request->take);
+        return $this->MuscleRepo->getList($request->take);
     }
 
     /**
-     * Display a listing of my gym Days.
+     * Display a listing of my gym Muscles.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getMyGymDays(Pagination $request)
+    public function getMyGymMuscles(Pagination $request)
     {
         $request->validated();
-        return $this->DayRepo->getListMyGym($request->take);
+        return $this->MuscleRepo->getListMyGym($request->take);
     }
 
     /**
@@ -49,13 +49,13 @@ class DayController extends Controller
      */
     public function store(Create $request)
     {
-        $day = $request->validated();
-        $day['captain_id'] = auth()->user()->id;
-        $day['gym_id'] = auth()->user()->gym->uuid;
-        $response = $this->DayRepo->create($day);
+        $Muscle = $request->validated();
+        $Muscle['captain_id'] = auth()->user()->id;
+        $Muscle['gym_id'] = auth()->user()->gym->uuid;
+        $response = $this->MuscleRepo->create($Muscle);
         return response()->json([
             'success' => true,
-            'message' => 'Day created successfully',
+            'message' => 'Muscle created successfully',
             'data' => $response
 
         ], Response::HTTP_OK);
@@ -64,38 +64,38 @@ class DayController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Day  $debt
+     * @param  \App\Models\Muscle  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return $this->DayRepo->show($id);
+        return $this->MuscleRepo->show($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Day  $id
+     * @param  \App\Models\Muscle  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Update $request, $id)
     {
-        $day = $request->validated();
-        $this->DayRepo->update($id, $day);
+        $muscle = $request->validated();
+        $this->MuscleRepo->update($id, $muscle);
         return response()->json([
             'success' => true,
-            'message' => 'Day updated successfully',
+            'message' => 'Muscle updated successfully',
         ], Response::HTTP_OK);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Day  $day
+     * @param  \App\Models\Muscle  $muscle
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Day $day)
+    public function destroy(Muscle $muscle)
     {
         if(!Utilities::admin() && !Utilities::captain()){
             return response()->json([
@@ -103,10 +103,10 @@ class DayController extends Controller
                 'message' => 'permission denied',
             ], Response::HTTP_FORBIDDEN);
         }
-        $this->DayRepo->delete($day);
+        $this->MuscleRepo->delete($muscle);
         return response()->json([
             'success' => true,
-            'message' => 'Day deleted successfully',
+            'message' => 'Muscle deleted successfully',
         ], Response::HTTP_OK);
     }
 }

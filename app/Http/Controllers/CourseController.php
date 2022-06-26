@@ -26,7 +26,7 @@ class CourseController extends Controller
     public function index(Pagination $request)
     {
         $request->validated();
-        return $this->CourseRepo->getList($request->take, $request->player_id);
+        return $this->CourseRepo->getList($request->take);
     }
 
     /**

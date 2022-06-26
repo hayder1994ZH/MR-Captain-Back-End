@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CardsController;
 use App\Http\Controllers\DebtsController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\MuscleController;
 use App\Http\Controllers\HandPayController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\VersionsController;
@@ -42,6 +43,7 @@ Route::group(['middleware' => ['admin']], function() {
     Route::get('my/debts', [DebtsController::class, 'getMyDebts']);
     Route::get('my/gym/course', [CourseController::class, 'getMyGymCourses']);
     Route::get('my/gym/day', [DayController::class, 'getMyGymDays']);
+    Route::get('my/gym/muscle', [MuscleController::class, 'getMyGymMuscles']);
     Route::get('my/course', [CourseController::class, 'getMyCourses']);
     Route::get('my/hand/pay', [HandPayController::class, 'getMyDebts']);
     Route::get('total/my/purchases', [PurchaseController::class, 'getMyPurchaseTotalPrice']);
@@ -62,4 +64,5 @@ Route::group(['middleware' => ['admin']], function() {
     Route::apiResource('hand/pay', 'HandPayController');
     Route::apiResource('course', 'CourseController');
     Route::apiResource('day', 'DayController');
+    Route::apiResource('muscle', 'MuscleController');
 });
