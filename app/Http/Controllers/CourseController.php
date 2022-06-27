@@ -26,7 +26,7 @@ class CourseController extends Controller
     public function index(Pagination $request)
     {
         $request->validated();
-        return $this->CourseRepo->getList($request->take, $request->player_id);
+        return $this->CourseRepo->getList($request->take);
     }
 
     /**
@@ -107,10 +107,10 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        $this->CourseRepo->delete($course);
-        return response()->json([
-            'success' => true,
-            'message' => 'course deleted successfully',
-        ], Response::HTTP_OK);
+        // $this->CourseRepo->delete($course);
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'course deleted successfully',
+        // ], Response::HTTP_OK);
     }
 }

@@ -1,13 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DayController;
+use App\Http\Controllers\PushController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CardsController;
 use App\Http\Controllers\DebtsController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\MuscleController;
 use App\Http\Controllers\HandPayController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\VersionsController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\SubscriptionController;
@@ -27,7 +31,7 @@ use App\Http\Controllers\WeightHistoryController;
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::get('public/version', [VersionsController::class, 'index']);
-Route::group(['middleware' => ['admin']], function() {
+Route::group(['middleware' => ['auth']], function() {
     Route::get('auth/logout', [AuthController::class, 'logout']);
     Route::get('auth/details', [AuthController::class, 'details']);
     Route::put('auth/profile', [AuthController::class, 'update']);
@@ -40,6 +44,10 @@ Route::group(['middleware' => ['admin']], function() {
     Route::get('my/sales', [SaleController::class, 'getMySales']);
     Route::get('my/debts', [DebtsController::class, 'getMyDebts']);
     Route::get('my/gym/course', [CourseController::class, 'getMyGymCourses']);
+    Route::get('my/gym/day', [DayController::class, 'getMyGymDays']);
+    Route::get('my/gym/push', [PushController::class, 'getMyGymPushes']);
+    Route::get('my/gym/training', [TrainingController::class, 'getMyGymTraininges']);
+    Route::get('my/gym/muscle', [MuscleController::class, 'getMyGymMuscles']);
     Route::get('my/course', [CourseController::class, 'getMyCourses']);
     Route::get('my/hand/pay', [HandPayController::class, 'getMyDebts']);
     Route::get('total/my/purchases', [PurchaseController::class, 'getMyPurchaseTotalPrice']);
@@ -59,4 +67,8 @@ Route::group(['middleware' => ['admin']], function() {
     Route::apiResource('debt', 'DebtsController');
     Route::apiResource('hand/pay', 'HandPayController');
     Route::apiResource('course', 'CourseController');
+    Route::apiResource('day', 'DayController');
+    Route::apiResource('muscle', 'MuscleController');
+    Route::apiResource('push', 'PushController');
+    Route::apiResource('training', 'TrainingController');
 });

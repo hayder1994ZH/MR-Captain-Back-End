@@ -37,14 +37,14 @@ class RulesController extends Controller
      */
     public function store(Create $request)
     {
-        $rule = $request->validated();
-        $response = $this->RulesRepo->create($rule);
-        return response()->json([
-            'success' => true,
-            'message' => 'Rule created successfully',
-            'data' => $response
+        // $rule = $request->validated();
+        // $response = $this->RulesRepo->create($rule);
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'Rule created successfully',
+        //     'data' => $response
 
-        ], Response::HTTP_OK);
+        // ], Response::HTTP_OK);
     }
 
     /**
@@ -67,12 +67,12 @@ class RulesController extends Controller
      */
     public function update(Update $request, $id)
     {
-        $rule = $request->validated();
-        $this->RulesRepo->update($id, $rule);
-        return response()->json([
-            'success' => true,
-            'message' => 'Rule updated successfully',
-        ], Response::HTTP_OK);
+    //     $rule = $request->validated();
+    //     $this->RulesRepo->update($id, $rule);
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'Rule updated successfully',
+    //     ], Response::HTTP_OK);
     }
 
     /**
@@ -83,10 +83,10 @@ class RulesController extends Controller
      */
     public function destroy(Rules $rule)
     {
-        $this->RulesRepo->delete($rule);
-        return response()->json([
-            'success' => true,
-            'message' => 'Rule deleted successfully',
-        ], Response::HTTP_OK);
+    //     $this->RulesRepo->delete($rule);
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'Rule deleted successfully',
+    //     ], Response::HTTP_OK);
     }
 }
