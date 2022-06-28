@@ -17,7 +17,7 @@ class Day extends Model
         return $date->format('Y-m-d h:i:s');
     }
     protected $relations = [
-        'gym'
+        'gym',
     ];
     protected $hidden = [
         'deleted_at',

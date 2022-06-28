@@ -15,6 +15,7 @@ use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\VersionsController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CourseDayController;
+use App\Http\Controllers\DayMuscleController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\WeightHistoryController;
@@ -51,6 +52,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('my/gym/muscle', [MuscleController::class, 'getMyGymMuscles']);
     Route::get('my/course', [CourseController::class, 'getMyCourses']);
     Route::get('my/course/days', [CourseDayController::class, 'getMyCourseDays']);
+    Route::get('my/day/muscles', [DayMuscleController::class, 'getMyDayMuscles']);
     Route::get('my/hand/pay', [HandPayController::class, 'getMyDebts']);
     Route::get('total/my/purchases', [PurchaseController::class, 'getMyPurchaseTotalPrice']);
     Route::apiResource('user', 'UserController');
@@ -74,4 +76,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::apiResource('push', 'PushController');
     Route::apiResource('training', 'TrainingController');
     Route::apiResource('courses/days', 'CourseDayController');
+    Route::apiResource('days/muscles', 'DayMuscleController');
 });

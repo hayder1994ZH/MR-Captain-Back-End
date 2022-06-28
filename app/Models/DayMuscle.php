@@ -6,20 +6,21 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CourseDays extends Model
-{ use SoftDeletes;
+class DayMuscle extends Model
+{ 
+    use SoftDeletes;
     protected $fillable = [
-        'id','gym_id', 'course_id', 'day_id', 'created_at', 'updated_at'
+        'id', 'course_day_id', 'muscle_id', 'gym_id', 'created_at', 'updated_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d h:i:s');
     }
     protected $relations = [
-        'gym', 'course', 'day'
+        'gym', 'day', 'muscle'
     ];
     protected $hidden = [
-        'deleted_at', 'gym_id', 'course_id', 'day_id', 'created_at', 'updated_at'
+        'deleted_at', 'gym_id','muscle_id', 'course_day_id', 'created_at', 'updated_at'
     ];
     protected $casts = [];
 
@@ -30,10 +31,10 @@ class CourseDays extends Model
     }
     public function day()
     {
-        return $this->belongsTo(Day::class, 'day_id')->select('id', 'name');
+        return $this->belongsTo(CourseDay::class, 'course_day_id');
     }
-    public function course()
+    public function muscle()
     {
-        return $this->belongsTo(Course::class, 'course_id');
+        return $this->belongsTo(Muscle::class, 'muscle_id');
     }
 }

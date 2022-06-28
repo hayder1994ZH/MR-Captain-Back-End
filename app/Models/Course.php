@@ -42,6 +42,6 @@ class Course extends Model
     }
     public function days()
     {
-		return $this->hasMany(CourseDays::class)->with('day');
+		return $this->hasMany(CourseDay::class)->with('day')->orderBy('day_id', 'asc');
     }
 }

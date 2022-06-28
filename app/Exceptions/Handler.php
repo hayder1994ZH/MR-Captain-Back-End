@@ -81,7 +81,7 @@ class Handler extends ExceptionHandler
         if ($exception instanceof Forbidden403Exception) 
         {
             return response()->json([
-                'message' => 'permission denid',
+                'message' => 'permission denied',
             ], 403);
         }
         //catch any exception of any API 

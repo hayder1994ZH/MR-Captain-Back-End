@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CourseDay;
+use App\Models\DayMuscle;
 use App\Helpers\Utilities;
-use App\Http\Requests\CourseDay\Create;
-use App\Http\Requests\CourseDay\Update;
+use Illuminate\Http\Request;
+use App\Http\Requests\DayMuscle\Create;
+use App\Http\Requests\DayMuscle\Update;
 use App\Http\Requests\Index\Pagination;
-use App\Repositories\CourseDayRepository;
+use App\Repositories\DayMuscleRepository;
 use Symfony\Component\HttpFoundation\Response;
 
-class CourseDayController extends Controller
+class DayMuscleController extends Controller
 {
-    private $CourseDayRepo;
-    public function __construct(CourseDayRepository $CourseDayRepo)
+    private $DayMuscleRepo;
+    public function __construct(DayMuscleRepository $DayMuscleRepo)
     {
-        $this->CourseDayRepo = $CourseDayRepo;
+        $this->DayMuscleRepo = $DayMuscleRepo;
     }
     
     /**
@@ -26,18 +27,18 @@ class CourseDayController extends Controller
     public function index(Pagination $request)
     {
         $request->validated();
-        return $this->CourseDayRepo->getList($request->take);
+        return $this->DayMuscleRepo->getList($request->take);
     }
 
     /**
-     * Display a listing of my gym CourseDays.
+     * Display a listing of my gym DayMuscles.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getMyGymCourseDayes(Pagination $request)
+    public function getMyGymDayMusclees(Pagination $request)
     {
         $request->validated();
-        return $this->CourseDayRepo->getListMyGym($request->take);
+        return $this->DayMuscleRepo->getListMyGym($request->take);
     }
 
     /**
@@ -48,9 +49,9 @@ class CourseDayController extends Controller
      */
     public function store(Create $request)
     {
-        $CourseDay = $request->validated();
-        $CourseDay['gym_id'] = auth()->user()->gym->uuid;
-        $response = $this->CourseDayRepo->create($CourseDay);
+        $DayMuscle = $request->validated();
+        $DayMuscle['gym_id'] = auth()->user()->gym->uuid;
+        $response = $this->DayMuscleRepo->create($DayMuscle);
         return response()->json([
             'success' => true,
             'message' => 'Course and Day created successfully',
@@ -62,25 +63,25 @@ class CourseDayController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CourseDay  $id
+     * @param  \App\Models\DayMuscle  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return $this->CourseDayRepo->show($id)->muscles;
+        return $this->DayMuscleRepo->show($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CourseDay  $id
+     * @param  \App\Models\DayMuscle  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Update $request, $id)
     {
-        $CourseDay = $request->validated();
-        $this->CourseDayRepo->update($id, $CourseDay);
+        $DayMuscle = $request->validated();
+        $this->DayMuscleRepo->update($id, $DayMuscle);
         return response()->json([
             'success' => true,
             'message' => 'Course and Day updated successfully',
@@ -90,10 +91,10 @@ class CourseDayController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CourseDay  $CourseDay
+     * @param  \App\Models\DayMuscle  $DayMuscle
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CourseDay $day)
+    public function destroy(DayMuscle $day)
     {
         if(!Utilities::admin() && !Utilities::captain()){
             return response()->json([
@@ -101,7 +102,7 @@ class CourseDayController extends Controller
                 'message' => 'permission denied',
             ], Response::HTTP_FORBIDDEN);
         }
-        $this->CourseDayRepo->delete($day);
+        $this->DayMuscleRepo->delete($day);
         return response()->json([
             'success' => true,
             'message' => 'Course and Day deleted successfully',
