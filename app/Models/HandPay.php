@@ -10,7 +10,7 @@ class HandPay extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'details', 'old_price', 'current_price', 'price', 'user_id', 'gym_id', 'player_id', 'debt_id', 'created_at', 'update_at'
+        'id', 'details', 'old_price', 'current_price', 'price', 'user_id', 'gym_id', 'player_id', 'debt_id', 'created_at', 'updated_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {

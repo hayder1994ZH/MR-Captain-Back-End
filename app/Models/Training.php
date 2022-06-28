@@ -11,7 +11,7 @@ class Training extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'name', 'details', 'image', 'gym_id', 'created_at', 'update_at'
+        'id', 'name', 'details', 'image', 'gym_id', 'created_at', 'updated_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {

@@ -10,7 +10,7 @@ class Subscription extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'is_active', 'is_sms', 'is_whatsapp', 'player_id', 'gym_id', 'card_id', 'expair_date', 'created_at', 'update_at'
+        'id', 'is_active', 'is_sms', 'is_whatsapp', 'player_id', 'gym_id', 'card_id', 'expair_date', 'created_at', 'updated_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {

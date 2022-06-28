@@ -11,7 +11,7 @@ class Music extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'name', 'image', 'music', 'url','created_at', 'update_at'
+        'id', 'name', 'image', 'music', 'url','created_at', 'updated_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {

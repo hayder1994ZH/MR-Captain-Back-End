@@ -12,7 +12,7 @@ class Gym extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'name', 'uuid', 'logo', 'long', 'lat', 'city_id', 'is_ads', 'is_active', 'created_at', 'update_at'
+        'id', 'name', 'uuid', 'logo', 'long', 'lat', 'city_id', 'is_ads', 'is_active', 'created_at', 'updated_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {
