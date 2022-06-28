@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DayMuscle;
 use App\Helpers\Utilities;
 use Illuminate\Http\Request;
-use App\Http\Requests\DayMuscle\Create;
-use App\Http\Requests\DayMuscle\Update;
+use App\Models\MuscleTraining;
 use App\Http\Requests\Index\Pagination;
-use App\Repositories\DayMuscleRepository;
+use App\Http\Requests\MuscleTraining\Create;
+use App\Http\Requests\MuscleTraining\Update;
+use App\Repositories\MuscleTrainingRepository;
 use Symfony\Component\HttpFoundation\Response;
 
-class DayMuscleController extends Controller
+class MuscleTrainingController extends Controller
 {
-    private $DayMuscleRepo;
-    public function __construct(DayMuscleRepository $DayMuscleRepo)
+    private $MuscleTrainingRepo;
+    public function __construct(MuscleTrainingRepository $MuscleTrainingRepo)
     {
-        $this->DayMuscleRepo = $DayMuscleRepo;
+        $this->MuscleTrainingRepo = $MuscleTrainingRepo;
     }
     
     /**
@@ -27,18 +27,18 @@ class DayMuscleController extends Controller
     public function index(Pagination $request)
     {
         $request->validated();
-        return $this->DayMuscleRepo->getList($request->take);
+        return $this->MuscleTrainingRepo->getList($request->take);
     }
 
     /**
-     * Display a listing of my gym DayMuscles.
+     * Display a listing of my gym MuscleTrainings.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getMyGymDayMuscles(Pagination $request)
+    public function getMyGymMuscleTrainings(Pagination $request)
     {
         $request->validated();
-        return $this->DayMuscleRepo->getListMyGym($request->take);
+        return $this->MuscleTrainingRepo->getListMyGym($request->take);
     }
 
     /**
@@ -49,12 +49,12 @@ class DayMuscleController extends Controller
      */
     public function store(Create $request)
     {
-        $DayMuscle = $request->validated();
-        $DayMuscle['gym_id'] = auth()->user()->gym->uuid;
-        $response = $this->DayMuscleRepo->create($DayMuscle);
+        $MuscleTraining = $request->validated();
+        $MuscleTraining['gym_id'] = auth()->user()->gym->uuid;
+        $response = $this->MuscleTrainingRepo->create($MuscleTraining);
         return response()->json([
             'success' => true,
-            'message' => 'Day and muscle created successfully',
+            'message' => 'Muscle and training created successfully',
             'data' => $response
 
         ], Response::HTTP_OK);
@@ -63,38 +63,38 @@ class DayMuscleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\DayMuscle  $id
+     * @param  \App\Models\MuscleTraining  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return $this->DayMuscleRepo->show($id)->trainings;
+        return $this->MuscleTrainingRepo->show($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\DayMuscle  $id
+     * @param  \App\Models\MuscleTraining  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Update $request, $id)
     {
-        $DayMuscle = $request->validated();
-        $this->DayMuscleRepo->update($id, $DayMuscle);
+        $MuscleTraining = $request->validated();
+        $this->MuscleTrainingRepo->update($id, $MuscleTraining);
         return response()->json([
             'success' => true,
-            'message' => 'Day and muscle updated successfully',
+            'message' => 'Muscle and training updated successfully',
         ], Response::HTTP_OK);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\DayMuscle  $muscles
+     * @param  \App\Models\MuscleTraining  $MuscleTraining
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DayMuscle $muscles)
+    public function destroy(MuscleTraining $trainings)
     {
         if(!Utilities::admin() && !Utilities::captain()){
             return response()->json([
@@ -102,10 +102,10 @@ class DayMuscleController extends Controller
                 'message' => 'permission denied',
             ], Response::HTTP_FORBIDDEN);
         }
-        $this->DayMuscleRepo->delete($muscles);
+        $this->MuscleTrainingRepo->delete($trainings);
         return response()->json([
             'success' => true,
-            'message' => 'Day and muscle deleted successfully',
+            'message' => 'Muscle and training deleted successfully',
         ], Response::HTTP_OK);
     }
 }

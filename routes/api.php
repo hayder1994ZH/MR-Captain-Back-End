@@ -51,8 +51,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('my/gym/training', [TrainingController::class, 'getMyGymTraininges']);
     Route::get('my/gym/muscle', [MuscleController::class, 'getMyGymMuscles']);
     Route::get('my/course', [CourseController::class, 'getMyCourses']);
+    Route::get('full/course/{id}', [CourseController::class, 'getFullCourse']);
     Route::get('my/course/days', [CourseDayController::class, 'getMyCourseDays']);
-    Route::get('my/day/muscles', [DayMuscleController::class, 'getMyDayMuscles']);
+    Route::get('my/day/muscles', [DayMuscleController::class, 'getMyGymDayMuscles']);
+    Route::get('my/muscle/trainings', [MuscleTrainingController::class, 'getMyGymMuscleTrainings']);
     Route::get('my/hand/pay', [HandPayController::class, 'getMyDebts']);
     Route::get('total/my/purchases', [PurchaseController::class, 'getMyPurchaseTotalPrice']);
     Route::apiResource('user', 'UserController');
@@ -77,4 +79,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::apiResource('training', 'TrainingController');
     Route::apiResource('courses/days', 'CourseDayController');
     Route::apiResource('days/muscles', 'DayMuscleController');
+    Route::apiResource('muscles/trainings', 'MuscleTrainingController');
 });

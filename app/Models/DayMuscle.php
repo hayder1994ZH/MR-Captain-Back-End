@@ -17,7 +17,7 @@ class DayMuscle extends Model
         return $date->format('Y-m-d h:i:s');
     }
     protected $relations = [
-        'gym', 'day', 'muscle'
+        'gym', 'day', 'muscle', 'trainings'
     ];
     protected $hidden = [
         'deleted_at', 'gym_id','muscle_id', 'course_day_id', 'created_at', 'updated_at'
@@ -35,6 +35,10 @@ class DayMuscle extends Model
     }
     public function muscle()
     {
-        return $this->belongsTo(Muscle::class, 'muscle_id');
+        return $this->belongsTo(Muscle::class, 'muscle_id')->select('id', 'name');
+    }
+    public function trainings()
+    {
+        return $this->hasMany(MuscleTraining::class, 'day_muscle_id')->with('training', 'push');
     }
 }
