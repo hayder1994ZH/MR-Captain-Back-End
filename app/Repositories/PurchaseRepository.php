@@ -29,7 +29,7 @@ class PurchaseRepository extends BaseRepository{
                                 ->sum('price');
         $course = QueryBuilder::for(Course::class)
                                 ->where('gym_id', auth()->user()->gym->uuid)
-                                // ->whereBetween('created_at', [$fromDate, $toDate])
+                                ->whereBetween('created_at', [$fromDate, $toDate])
                                 ->sum('price');
         $subscrip = 0;
         $subscription = QueryBuilder::for(Subscription::class)
