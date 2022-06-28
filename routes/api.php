@@ -32,7 +32,7 @@ use App\Http\Controllers\WeightHistoryController;
 
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/register', [AuthController::class, 'register']);
-Route::get('public/version', [VersionsController::class, 'index']);
+Route::get('public/version/{version}', [VersionsController::class, 'getPublicVersion']);
 Route::group(['middleware' => ['auth']], function() {
     Route::get('auth/logout', [AuthController::class, 'logout']);
     Route::get('auth/details', [AuthController::class, 'details']);

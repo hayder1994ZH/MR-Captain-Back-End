@@ -8,4 +8,11 @@ class VersionsRepository extends BaseRepository{
     {
         parent::__construct(new Versions());
     }
+
+    public  function getVersion($value = '')
+    {
+        if($value){
+            return $this->model->where('version', $value)->first();
+        }
+    }
 }

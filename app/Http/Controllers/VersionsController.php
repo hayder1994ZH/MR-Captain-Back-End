@@ -90,4 +90,15 @@ class VersionsController extends Controller
         ], 
         Response::HTTP_OK);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Versions  $Versions
+     * @return \Illuminate\Http\Response
+     */
+    public function getPublicVersion($version)
+    {
+        return $this->VersionsRepo->getVersion($version);
+    }
 }
