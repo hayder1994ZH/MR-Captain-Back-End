@@ -10,7 +10,7 @@ class Cards extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'name', 'price', 'days', 'user_id', 'gym_id', 'created_at', 'update_at'
+        'id', 'name', 'price', 'days', 'user_id', 'gym_id', 'created_at', 'updated_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {

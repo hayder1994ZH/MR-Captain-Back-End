@@ -14,6 +14,8 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\VersionsController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CourseDayController;
+use App\Http\Controllers\DayMuscleController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\WeightHistoryController;
@@ -30,7 +32,7 @@ use App\Http\Controllers\WeightHistoryController;
 
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/register', [AuthController::class, 'register']);
-Route::get('public/version', [VersionsController::class, 'index']);
+Route::get('public/version/{version}', [VersionsController::class, 'getPublicVersion']);
 Route::group(['middleware' => ['auth']], function() {
     Route::get('auth/logout', [AuthController::class, 'logout']);
     Route::get('auth/details', [AuthController::class, 'details']);
@@ -49,6 +51,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('my/gym/training', [TrainingController::class, 'getMyGymTraininges']);
     Route::get('my/gym/muscle', [MuscleController::class, 'getMyGymMuscles']);
     Route::get('my/course', [CourseController::class, 'getMyCourses']);
+    Route::get('full/course/{id}', [CourseController::class, 'getFullCourse']);
+    Route::get('my/course/days', [CourseDayController::class, 'getMyCourseDays']);
+    Route::get('my/day/muscles', [DayMuscleController::class, 'getMyGymDayMuscles']);
+    Route::get('my/muscle/trainings', [MuscleTrainingController::class, 'getMyGymMuscleTrainings']);
     Route::get('my/hand/pay', [HandPayController::class, 'getMyDebts']);
     Route::get('total/my/purchases', [PurchaseController::class, 'getMyPurchaseTotalPrice']);
     Route::apiResource('user', 'UserController');
@@ -71,4 +77,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::apiResource('muscle', 'MuscleController');
     Route::apiResource('push', 'PushController');
     Route::apiResource('training', 'TrainingController');
+    Route::apiResource('courses/days', 'CourseDayController');
+    Route::apiResource('days/muscles', 'DayMuscleController');
+    Route::apiResource('muscles/trainings', 'MuscleTrainingController');
 });

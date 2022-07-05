@@ -10,7 +10,7 @@ class Advertisement extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'name', 'image', 'url', 'phone', 'type', 'is_active', 'subtitle', 'gender', 'country_id', 'city_id', 'user_id', 'created_at', 'update_at'
+        'id', 'name', 'image', 'url', 'phone', 'type', 'is_active', 'subtitle', 'gender', 'country_id', 'city_id', 'user_id', 'created_at', 'updated_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {

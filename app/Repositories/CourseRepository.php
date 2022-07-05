@@ -19,5 +19,44 @@ class CourseRepository extends BaseRepository{
                                 ->where('player_id', auth()->user()->id);
         return $result->paginate($take);
     } 
+    //Base repo to get full Course
+    public function fullCourse($id){
+        $course = $this->model->where('id', $id)
+                            ->with('days', 'days.muscles', 'days.muscles', 'days.muscles.trainings')
+                            ->get();
+        return $this->mapping($course);
+    }
+
+    public function mapping($course){
+        return $course->map(function($item){
+           $data['title'] =  $item->title;
+           $data['details'] =  $item->details;
+           $data['weight'] =  $item->weight;
+           $data['price'] =  $item->price;
+           $data['captain_id'] =  $item->captain_id;
+           $data['player_id'] =  $item->player_id;
+           $data['created_at'] =  $item->created_at;
+           $data['updated_at'] =  $item->updated_at;
+           $data['captain'] =  $item->captain;
+           $data['gym'] =  $item->gym;
+           $data['player'] =  $item->player;
+           $data['days'] =  
+           $item->days->map(function($days){
+                $day['id'] =  $days->day->id;
+                $day['name'] =  $days->day->name;
+                $day['muscles'] =  $days->muscles
+                ->map(function($muscles){
+                    $muscle['id'] =  $muscles->muscle->id;
+                    $muscle['name'] =  $muscles->muscle->name;
+                    $muscle['trainings'] =  $muscles->trainings;
+                    return $muscle;
+               });
+                return $day;
+           });
+            return $data;
+        });
+        
+    }
+    
     
 }

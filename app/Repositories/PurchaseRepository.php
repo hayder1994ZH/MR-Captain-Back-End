@@ -3,7 +3,9 @@ namespace App\Repositories;
 
 use App\Models\Sale;
 use App\Models\Debts;
+use App\Models\Course;
 use App\Models\Purchase;
+use App\Models\Subscription;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PurchaseRepository extends BaseRepository{
@@ -25,11 +27,24 @@ class PurchaseRepository extends BaseRepository{
                                 ->where('gym_id', auth()->user()->gym->uuid)
                                 ->whereBetween('created_at', [$fromDate, $toDate])
                                 ->sum('price');
+        $course = QueryBuilder::for(Course::class)
+                                ->where('gym_id', auth()->user()->gym->uuid)
+                                ->whereBetween('created_at', [$fromDate, $toDate])
+                                ->sum('price');
+        $subscrip = 0;
+        $subscription = QueryBuilder::for(Subscription::class)
+                                ->where('gym_id', auth()->user()->gym->uuid)
+                                ->whereBetween('created_at', [$fromDate, $toDate]);
+                                foreach($subscription->get() as $item){
+                                    $subscrip += $item->card->price;
+                                }
         return [
             'purchase' => $purchase,
             'sales' => $sales,
             'debts' => $debts,
-            'profits' => $profits
+            'profits' => $profits,
+            'course' => $course,
+            'subscription' => $subscrip,
         ];
     }
 }

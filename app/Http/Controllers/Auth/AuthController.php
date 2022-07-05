@@ -77,6 +77,6 @@ class AuthController extends Controller
     //User auth information
     public function details()
     {
-        return auth()->user();
+        return auth()->user()->load('rule', 'gym');
     }
 }

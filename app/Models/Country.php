@@ -10,7 +10,7 @@ class Country extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'name', 'created_at', 'update_at'
+        'id', 'name', 'created_at', 'updated_at'
     ];
     protected $hidden = [
         'deleted_at',

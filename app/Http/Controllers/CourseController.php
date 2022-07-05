@@ -113,4 +113,14 @@ class CourseController extends Controller
         //     'message' => 'course deleted successfully',
         // ], Response::HTTP_OK);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */ 
+    public function getFullCourse($id)
+    {
+        return $this->CourseRepo->fullCourse($id);
+    }
 }

@@ -28,7 +28,7 @@ class AuthRepository extends BaseRepository{
         return [[
             'token' => $token,
             'success' => true,
-            'message' => 'Could not create token.',
+            'message' => 'created token successfully.',
             'userAuth' => auth()->user(),
         ], 'code' => 200];
     }

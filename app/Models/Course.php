@@ -10,14 +10,14 @@ class Course extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'title', 'details', 'weight', 'price', 'captain_id', 'gym_id', 'player_id', 'created_at', 'update_at'
+        'id', 'title', 'details', 'weight', 'price', 'captain_id', 'gym_id', 'player_id', 'created_at', 'updated_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d h:i:s');
     }
     protected $relations = [
-        'captain', 'gym', 'player'
+        'captain', 'gym', 'player', 'days'
     ];
     protected $hidden = [
         'deleted_at',
@@ -39,5 +39,9 @@ class Course extends Model
     public function gym()
     {
         return $this->belongsTo(Gym::class, 'gym_id', 'uuid')->select('uuid', 'name', 'logo');
+    }
+    public function days()
+    {
+		return $this->hasMany(CourseDay::class)->with('day')->orderBy('day_id', 'asc');
     }
 }
