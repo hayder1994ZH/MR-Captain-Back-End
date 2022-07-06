@@ -100,4 +100,17 @@ class UserController extends Controller
         $request->validated();
         return $this->UserRepo->getListMyGym($request->take);
     }
+    
+    //Registeration Captain
+    public function addCaptain(Create $request)
+    {
+        $data = $request->validated();
+        $data['password'] = bcrypt($request->password);
+        $data['rule_id'] = 3;
+        if($request->hasFile('image')){
+            $data['image'] = $request->file('image')->store('avatars');
+        }
+        $response = $this->UserRepo->create($data);
+        return response()->json($response, 200);
+    }
 }

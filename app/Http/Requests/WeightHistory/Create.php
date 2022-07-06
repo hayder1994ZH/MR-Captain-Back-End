@@ -26,6 +26,7 @@ class Create extends FormRequest
         return [
             'weight' => 'required|string',
             'date' => 'required|string',
+            'user_id' => 'required|integer|exists:users,id',
         ];
     }
 }

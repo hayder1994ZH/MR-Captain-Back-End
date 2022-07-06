@@ -49,7 +49,6 @@ class WeightHistoryController extends Controller
     public function store(Create $request)
     {
         $weight = $request->validated();
-        $weight['user_id'] = auth()->user()->id;
         $response = $this->WeightHistoryRepo->create($weight);
         return response()->json([
             'success' => true,

@@ -37,8 +37,22 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         $data['password'] = bcrypt($request->password);
-        $data['rule_id'] = 3;
+        $data['rule_id'] = 5;
         $user = $this->authRepo->create($data);
+        $response = $this->authRepo->authenticate([
+            'phone' => $data['phone'],
+            'password' => $request->password
+        ]);
+        return response()->json($response[0], $response['code']);
+    }
+
+    //Registeration
+    public function registerAdmin(Register $request)
+    {
+        $data = $request->validated();
+        $data['password'] = bcrypt($request->password);
+        $data['rule_id'] = 2;
+        $this->authRepo->create($data);
         $response = $this->authRepo->authenticate([
             'phone' => $data['phone'],
             'password' => $request->password

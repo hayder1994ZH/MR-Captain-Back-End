@@ -26,6 +26,8 @@ class Update extends FormRequest
         return [
             'weight' => 'string',
             'date' => 'string',
+            'user_id' => 'integer|exists:users,id',
+
         ];
     }
 }
