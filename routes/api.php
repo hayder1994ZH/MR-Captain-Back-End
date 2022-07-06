@@ -32,11 +32,15 @@ use App\Http\Controllers\WeightHistoryController;
 
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/register', [AuthController::class, 'register']);
+Route::post('auth/register/admin', [AuthController::class, 'registerAdmin']);
+Route::apiResource('city', 'CityController');//
+Route::apiResource('country', 'CountryController');
 Route::get('public/version/{version}', [VersionsController::class, 'getPublicVersion']);
 Route::group(['middleware' => ['auth']], function() {
     Route::get('auth/logout', [AuthController::class, 'logout']);
     Route::get('auth/details', [AuthController::class, 'details']);
     Route::put('auth/profile', [AuthController::class, 'update']);
+    Route::post('add/captain', [UserController::class, 'addCaptain']);
     Route::get('my/gym/users', [UserController::class, 'getMyGymUsers']);
     Route::get('my/weight/histories', [WeightHistoryController::class, 'getMyWeightHistories']);
     Route::get('my/cards', [CardsController::class, 'getMyCards']);
@@ -61,8 +65,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::apiResource('rule', 'RulesController');
     Route::apiResource('gym', 'GymController');
     Route::apiResource('version', 'VersionsController');
-    Route::apiResource('city', 'CityController');
-    Route::apiResource('country', 'CountryController');
     Route::apiResource('weight/history', 'WeightHistoryController');
     Route::apiResource('card', 'CardsController');
     Route::apiResource('subscription', 'SubscriptionController');
