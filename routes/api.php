@@ -48,6 +48,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('my/weight/histories', [WeightHistoryController::class, 'getMyWeightHistories']);
     Route::get('my/cards', [CardsController::class, 'getMyCards']);
     Route::get('my/subscriptions', [SubscriptionController::class, 'getMySubscriptions']);
+    Route::post('add/by/last/subscription', [SubscriptionController::class, 'storeSubscripAboutLastSUbscription']);
     Route::get('my/advertisements', [AdvertisementController::class, 'getMyadvertisements']);
     Route::get('my/purchases', [PurchaseController::class, 'getMyPurchase']);
     Route::get('my/sales', [SaleController::class, 'getMySales']);

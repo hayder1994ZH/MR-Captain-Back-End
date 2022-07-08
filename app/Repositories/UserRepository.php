@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -14,7 +15,7 @@ class UserRepository extends BaseRepository{
         return $this->model->where('id', $userId)->first();
     }
     
-    //Base repo to get all items for my gym
+    //Base repo to get all items for my gym 
     public function getListMyGymAdminsAndCaptains($take = 10){
         $result = QueryBuilder::for($this->model)
                                 ->allowedIncludes($this->getRelationMethod())
@@ -23,7 +24,7 @@ class UserRepository extends BaseRepository{
                                 ->where('gym_id', auth()->user()->gym->uuid)
                                 ->where(function($query){
                                     $query->where('rule_id', 3)
-                                          ->orWhere('rule_id', 2);
+                                            ->orWhere('rule_id', 2);
                                 });
         return $result->paginate($take);
     } 

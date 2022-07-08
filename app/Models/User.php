@@ -67,7 +67,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->image ? request()->get('host') . Utilities::$imageBucket . $this->image : null;
     }
 
-    //Relations
+    //Relations player_id
     public function rule()
     {
         return $this->belongsTo(Rules::class);
@@ -79,5 +79,9 @@ class User extends Authenticatable implements JWTSubject
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+    public function debts()
+    {
+        return $this->hasMany(Debts::class, 'player_id');
     }
 }

@@ -41,7 +41,7 @@ class SubscriptionController extends Controller
     public function getMySubscriptions(Pagination $request)
     {
         $request->validated();
-        return $this->SubscriptionRepo->mySubscription($request->take);
+        return $this->SubscriptionRepo->mySubscription($request->take, $request->current_day, $request->player_not_expaired, $request->player_expaired);
     }
 
     /**
@@ -53,9 +53,36 @@ class SubscriptionController extends Controller
     public function store(Create $request)
     {
         $subscription = $request->validated();
-        $cardNumberDate = $this->SubscriptionRepo->getCard($subscription['card_id']);
         if($subscription['is_active']){
+            $cardNumberDate = $this->SubscriptionRepo->getCard($subscription['card_id']);
+            $subscription['start_date'] = Carbon::now();
             $subscription['expair_date'] = Carbon::now()->addDay($cardNumberDate);
+        }
+        $subscription['gym_id'] = auth()->user()->gym->uuid;
+        $response = $this->SubscriptionRepo->create($subscription);
+        return response()->json([
+            'success' => true,
+            'message' => 'subscription created successfully',
+            'data' => $response
+
+        ], Response::HTTP_OK);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeSubscripAboutLastSUbscription(Create $request)
+    {
+        $subscription = $request->validated();
+        if($subscription['is_active']){
+            $cardNumberDate = $this->SubscriptionRepo->getCard($subscription['card_id']);
+            $LastSubscripDate = $this->SubscriptionRepo->getLastSubscrip($subscription['player_id'])->expair_date;
+            $subscription['start_date'] = $LastSubscripDate;
+            $date = Carbon::createFromFormat('Y-m-d h:i:s', $LastSubscripDate);
+            $subscription['expair_date'] = $date->addDays($cardNumberDate);
         }
         $subscription['gym_id'] = auth()->user()->gym->uuid;
         $response = $this->SubscriptionRepo->create($subscription);
@@ -91,6 +118,7 @@ class SubscriptionController extends Controller
         if($request->has('is_active')){
             $cardNumberDate = $this->SubscriptionRepo->getCard($subscription['card_id']);
             if($subscription['is_active']){
+                $subscription['start_date'] = Carbon::now();
                 $subscription['expair_date'] = Carbon::now()->addDay($cardNumberDate);
             }
         }
