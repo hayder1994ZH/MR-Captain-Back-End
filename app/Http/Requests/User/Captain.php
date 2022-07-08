@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\User;
 
+use App\Helpers\Utilities;
 use Illuminate\Foundation\Http\FormRequest;
 
-class Update extends FormRequest
+class Captain extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,6 +14,9 @@ class Update extends FormRequest
      */
     public function authorize()
     {
+        if(!Utilities::admin()){
+            return false;
+        }
         return true;
     }
 
@@ -23,18 +27,16 @@ class Update extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route('user');
         return [
-            'name' => 'string',
-            'phone' => 'string|min:11|max:11|unique:users,phone',
-            'password' => 'string',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
-            'rule_id' => 'integer|exists:rules,id',
-            'city_id' => 'integer|exists:cities,id',
-            'gym_id' => 'string|exists:gyms,uuid',
-            'gender' => 'string|max:255',
-            'birthday' => 'nullable|string',
+            'name' => 'required|string',
+            'phone' => 'required|string|min:11|max:11|unique:users,phone',
             'card_number' => 'nullable|string',
+            'password' => 'required|string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'city_id' => 'required|integer|exists:cities,id',
+            'gym_id' => 'required|string|exists:gyms,uuid',
+            'gender' => 'required|string|max:255',
+            'birthday' => 'nullable|string',
             'notes' => 'nullable|string',
             'long' => 'nullable|string',
             'lat' => 'nullable|string'

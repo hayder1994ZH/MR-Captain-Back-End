@@ -26,6 +26,7 @@ class Create extends FormRequest
         return [
             'name' => 'required|string',
             'phone' => 'required|string|min:11|max:11|unique:users,phone',
+            'card_number' => 'nullable|string',
             'password' => 'required|string',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
             'rule_id' => 'required|integer|exists:rules,id',

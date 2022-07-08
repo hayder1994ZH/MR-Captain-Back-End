@@ -30,9 +30,10 @@ class Register extends FormRequest
             'city_id' => 'required|integer|exists:cities,id',
             'gender' => 'required|string|max:255',
             'birthday' => 'nullable|string',
+            'card_number' => 'nullable|string',
             'notes' => 'nullable|string',
-            'long' => 'required|string',
-            'lat' => 'required|string'
+            'long' => 'nullable|string',
+            'lat' => 'nullable|string'
         ];
     }
 }

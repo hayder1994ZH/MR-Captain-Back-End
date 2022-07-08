@@ -27,6 +27,7 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
         'birthday',
         'gender',
+        'card_number',
         'rule_id',
         'gym_id',
         'city_id',

@@ -34,6 +34,7 @@ class UpdateProfile extends FormRequest
             'gender' => 'string|max:255',
             'birthday' => 'nullable|string',
             'notes' => 'nullable|string',
+            'card_number' => 'nullable|string',
             'long' => 'nullable|string',
             'lat' => 'nullable|string',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg'

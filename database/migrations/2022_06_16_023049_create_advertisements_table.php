@@ -21,7 +21,7 @@ class CreateAdvertisementsTable extends Migration
             $table->string('image')->nullable();
             $table->string('gender')->nullable();
             $table->string('phone')->nullable();
-            $table->string('subtitle')->nullable();
+            $table->longText('subtitle')->nullable();
             $table->string('type')->nullable();
             $table->boolean('is_active')->default(0);
             $table->unsignedBigInteger('city_id')->nullable();
