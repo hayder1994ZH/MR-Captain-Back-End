@@ -10,7 +10,7 @@ class Subscription extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'is_active', 'is_sms', 'is_whatsapp', 'player_id', 'gym_id', 'card_id', 'expair_date', 'created_at', 'updated_at'
+        'id', 'is_active', 'is_sms', 'is_whatsapp', 'player_id', 'gym_id', 'card_id', 'start_date', 'expair_date', 'created_at', 'updated_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -30,12 +30,17 @@ class Subscription extends Model
         'is_sms' => 'boolean',
         'is_whatsapp' => 'boolean',
         'expair_date' => 'datetime',
+        'start_date' => 'datetime',
     ];
 
     //relationships
     public function player()
     {
         return $this->belongsTo(User::class, 'player_id');
+    }
+    public function playerHasDebts()
+    {
+        return $this->belongsTo(User::class, 'player_id')->whereHas('debts');
     }
     public function card()
     {

@@ -37,7 +37,7 @@ class DebtsController extends Controller
     public function getMyDebts(Pagination $request)
     {
         $request->validated();
-        return $this->DebtsRepo->getListMyGym($request->take);
+        return $this->DebtsRepo->getListMyGymPlayer($request->take, $request->player_has_debts);
     }
 
     /**

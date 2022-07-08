@@ -20,4 +20,17 @@ class DebtsRepository extends BaseRepository{
                                 }
         return $result->paginate($take);
     } 
+
+    //Base repo to get all items for my gym
+    public function getListMyGymPlayer($take = 10, $player_has_debts = null){
+        $result = QueryBuilder::for($this->model)
+                                ->allowedIncludes($this->getRelationMethod())
+                                ->allowedFilters($this->getProperties())
+                                ->allowedSorts($this->getProperties())
+                                ->where('gym_id', auth()->user()->gym->uuid);
+                                if($player_has_debts){
+                                    $result->where('price', '>', 0);
+                                }
+        return $result->paginate($take);
+    } 
 }
