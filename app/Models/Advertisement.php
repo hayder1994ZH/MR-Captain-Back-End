@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DateTimeInterface;
+use App\Helpers\Utilities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -27,6 +28,13 @@ class Advertisement extends Model
         'country_id' => 'integer',
         'city_id' => 'integer',
     ];
+    protected $appends = [
+       'image_url',
+    ];
+    public function getImageUrlAttribute()
+    {
+        return $this->image ? request()->get('host') . Utilities::$imageBucket . $this->image : null;
+    }
 
     //relationships
     public function user()

@@ -32,8 +32,9 @@ class UpdateProfile extends FormRequest
             'city_id' => 'integer|exists:cities,id',
             'gym_id' => 'string|exists:gyms,uuid',
             'gender' => 'string|max:255',
-            'brithday' => 'nullable|string',
+            'birthday' => 'nullable|string',
             'notes' => 'nullable|string',
+            'card_number' => 'nullable|string',
             'long' => 'nullable|string',
             'lat' => 'nullable|string',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg'

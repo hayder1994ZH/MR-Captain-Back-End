@@ -41,7 +41,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('auth/details', [AuthController::class, 'details']);
     Route::put('auth/profile', [AuthController::class, 'update']);
     Route::post('add/captain', [UserController::class, 'addCaptain']);
+    Route::post('add/player', [UserController::class, 'addPlayer']);
+    Route::post('add/admin', [UserController::class, 'addAdmin']);
     Route::get('my/gym/users', [UserController::class, 'getMyGymUsers']);
+    Route::get('admins/captains/info', [UserController::class, 'getAdminsOrCaptainsGym']);
     Route::get('my/weight/histories', [WeightHistoryController::class, 'getMyWeightHistories']);
     Route::get('my/cards', [CardsController::class, 'getMyCards']);
     Route::get('my/subscriptions', [SubscriptionController::class, 'getMySubscriptions']);

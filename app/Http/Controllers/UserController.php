@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\User\Admin;
 use App\Http\Requests\User\Create;
 use App\Http\Requests\User\Update;
+use App\Http\Requests\User\Captain;
 use App\Repositories\UserRepository;
 use Illuminate\Auth\Events\Validated;
 use App\Http\Requests\Index\Pagination;
+use App\Http\Requests\User\Player;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
@@ -27,6 +30,18 @@ class UserController extends Controller
     {
         $request->validated();
         return $this->UserRepo->getList($request->take);
+        
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAdminsOrCaptainsGym(Pagination $request)
+    {
+        $request->validated();
+        return $this->UserRepo->getListMyGymAdminsAndCaptains($request->take);
         
     }
 
@@ -102,11 +117,37 @@ class UserController extends Controller
     }
     
     //Registeration Captain
-    public function addCaptain(Create $request)
+    public function addCaptain(Captain $request)
     {
         $data = $request->validated();
         $data['password'] = bcrypt($request->password);
         $data['rule_id'] = 3;
+        if($request->hasFile('image')){
+            $data['image'] = $request->file('image')->store('avatars');
+        }
+        $response = $this->UserRepo->create($data);
+        return response()->json($response, 200);
+    }
+    
+    //Registeration Player
+    public function addPlayer(Player $request)
+    {
+        $data = $request->validated();
+        $data['password'] = bcrypt($request->password);
+        $data['rule_id'] = 5;
+        if($request->hasFile('image')){
+            $data['image'] = $request->file('image')->store('avatars');
+        }
+        $response = $this->UserRepo->create($data);
+        return response()->json($response, 200);
+    }
+    
+    //Registeration Player
+    public function addAdmin(Admin $request)
+    {
+        $data = $request->validated();
+        $data['password'] = bcrypt($request->password);
+        $data['rule_id'] = 2;
         if($request->hasFile('image')){
             $data['image'] = $request->file('image')->store('avatars');
         }
