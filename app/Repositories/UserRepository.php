@@ -42,12 +42,12 @@ class UserRepository extends BaseRepository{
                                 }
                                 if($player_not_expaired){
                                     $result->whereHas('subscriptions', function($query){
-                                        $query->whereDate('expair_date', '>', Carbon::today());
+                                        $query->whereDate('expair_date', '<=', Carbon::today());
                                     });
                                 }
                                 if($player_expaired){
                                     $result->whereHas('subscriptions', function($query){
-                                        $query->whereDate('expair_date', '<', Carbon::today());
+                                        $query->whereDate('expair_date', '=<', Carbon::today());
                                     });
                                 }
                                 if($player_has_debt){

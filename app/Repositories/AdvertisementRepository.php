@@ -23,4 +23,20 @@ class AdvertisementRepository extends BaseRepository{
                                 });
         return $result->paginate($take);
     } 
+    
+    //Base repo to get all items
+    public function getListAds($take = 10, $city_id = null, $country_id = null){
+        $result = QueryBuilder::for($this->model)
+                                ->allowedIncludes($this->getRelationMethod())
+                                ->allowedFilters($this->getProperties())
+                                ->allowedSorts($this->getProperties());
+                                if($city_id){
+                                    $result->where('city_id', $city_id);
+                                }
+                                if($country_id){
+                                    $result->where('country_id', $country_id);
+                                }
+
+        return $result->paginate($take);
+    } 
 }

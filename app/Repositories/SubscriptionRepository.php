@@ -13,20 +13,22 @@ class SubscriptionRepository extends BaseRepository{
     }
     //Base repo to get card days by id
     public function getCard($id){
-        return Cards::findOrFail($id)->days;
+        return Cards::where('gym_id', auth()->user()->gym->uuid)->find($id);
     }
-
     //Base repo to get card days by id
     public function getLastSubscrip($id){
         return $this->model->where('player_id', $id)->latest()->first();
     }
     //Base repo to get all items getLastSubscripDate
-    public function mySubscription($take = 10){
+    public function mySubscription($take = 10, $player_id = null){
         $result = QueryBuilder::for($this->model)
                                 ->allowedIncludes($this->getRelationMethod())
                                 ->allowedFilters($this->getProperties())
                                 ->allowedSorts($this->getProperties())
                                 ->where('gym_id', auth()->user()->gym->uuid);
+                                if($player_id){
+                                    $result->where('player_id', $player_id);
+                                }
         return $result->paginate($take);
     } 
 }

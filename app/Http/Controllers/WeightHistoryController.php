@@ -37,7 +37,7 @@ class WeightHistoryController extends Controller
     public function getMyWeightHistories(Pagination $request)
     {
         $request->validated();
-        return $this->WeightHistoryRepo->myWeightHistory($request->take);
+        return $this->WeightHistoryRepo->myWeightHistory($request->take, $request->user_id);
     }
 
     /**
