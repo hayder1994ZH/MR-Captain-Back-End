@@ -41,7 +41,7 @@ class SubscriptionController extends Controller
     public function getMySubscriptions(Pagination $request)
     {
         $request->validated();
-        return $this->SubscriptionRepo->mySubscription($request->take, $request->current_day, $request->player_not_expaired, $request->player_expaired);
+        return $this->SubscriptionRepo->mySubscription($request->take);
     }
 
     /**

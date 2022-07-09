@@ -46,6 +46,18 @@ class UserController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPlayersGym(Pagination $request)
+    {
+        $request->validated();
+        return $this->UserRepo->getListMyGymPlayers($request->take, $request->current_day, $request->player_not_expaired, $request->player_expaired, $request->player_has_debt);
+        
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
