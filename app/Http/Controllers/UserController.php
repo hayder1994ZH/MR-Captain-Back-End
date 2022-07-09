@@ -2,24 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Requests\User\Admin;
 use App\Http\Requests\User\Create;
+use App\Http\Requests\User\Player;
 use App\Http\Requests\User\Update;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\User\Captain;
 use App\Repositories\UserRepository;
-use Illuminate\Auth\Events\Validated;
 use App\Http\Requests\Index\Pagination;
-use App\Http\Requests\User\Player;
+use App\Repositories\SubscriptionRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
     private $UserRepo;
-    public function __construct(UserRepository $UserRepo)
+    private $SubscriptionRepo;
+    public function __construct(UserRepository $UserRepo, SubscriptionRepository $SubscriptionRepo)
     {
         $this->UserRepo = $UserRepo;
+        $this->SubscriptionRepo = $SubscriptionRepo;
     }
     /**
      * Display a listing of the resource.
@@ -71,6 +74,53 @@ class UserController extends Controller
             $user['image'] = $request->file('image')->store('avatars');
         }
         return $this->UserRepo->create($user);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storePlayerWithSubscription(Player $request)
+    {
+        $user = $request->validated();
+        //validations subscription
+        $subscription = $request->validate([
+            'card_id' => 'required|integer|exists:cards,id',
+        ]);
+        DB::beginTransaction();//start transaction
+        try {
+            $user['password'] = bcrypt($request->password);
+            $user['rule_id'] = 5;
+            if($request->hasFile('image')){
+                $user['image'] = $request->file('image')->store('avatars');
+            }
+            $user =  $this->UserRepo->create($user);
+            $cardNumberDate = $this->SubscriptionRepo->getCard($subscription['card_id']);
+            if(!$cardNumberDate){
+                return response()->json([
+                    'success' => false,
+                    'message' => 'card not found',
+                ], Response::HTTP_BAD_REQUEST);
+            }
+            $subscription['start_date'] = Carbon::now();
+            $subscription['expair_date'] = Carbon::now()->addDay($cardNumberDate->days);
+            $subscription['gym_id'] = auth()->user()->gym->uuid;
+            $subscription['player_id'] = $user['id'];
+            $subscription['is_active'] = 1;
+            $this->SubscriptionRepo->create($subscription);
+        } catch(\Exception $e)
+        {
+            DB::rollback();//rollback transaction if exception
+            throw $e;
+        }
+        DB::commit();//commit transaction if no exception
+        return response()->json([
+            'success' => true,
+            'message' => 'Player created successfully',
+            'data' => $user
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -134,6 +184,7 @@ class UserController extends Controller
         $data = $request->validated();
         $data['password'] = bcrypt($request->password);
         $data['rule_id'] = 3;
+        $data['gym_id'] = auth()->user()->gym->uuid;
         if($request->hasFile('image')){
             $data['image'] = $request->file('image')->store('avatars');
         }
@@ -147,6 +198,7 @@ class UserController extends Controller
         $data = $request->validated();
         $data['password'] = bcrypt($request->password);
         $data['rule_id'] = 5;
+        $data['gym_id'] = auth()->user()->gym->uuid;
         if($request->hasFile('image')){
             $data['image'] = $request->file('image')->store('avatars');
         }
@@ -160,6 +212,7 @@ class UserController extends Controller
         $data = $request->validated();
         $data['password'] = bcrypt($request->password);
         $data['rule_id'] = 2;
+        $data['gym_id'] = auth()->user()->gym->uuid;
         if($request->hasFile('image')){
             $data['image'] = $request->file('image')->store('avatars');
         }

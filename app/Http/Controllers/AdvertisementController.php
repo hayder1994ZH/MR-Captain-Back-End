@@ -25,7 +25,7 @@ class AdvertisementController extends Controller
     public function index(Pagination $request)
     {
         $request->validated();
-        return $this->AdvertisementRepo->getList($request->take);
+        return $this->AdvertisementRepo->getList($request->take, $request->city_id, $request->country_id);
     }
 
     /**

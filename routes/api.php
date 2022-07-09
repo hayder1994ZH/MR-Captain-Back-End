@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('auth/profile', [AuthController::class, 'update']);
     Route::post('add/captain', [UserController::class, 'addCaptain']);
     Route::post('add/player', [UserController::class, 'addPlayer']);
+    Route::post('add/player/subscription', [UserController::class, 'storePlayerWithSubscription']);
     Route::post('add/admin', [UserController::class, 'addAdmin']);
     Route::get('my/gym/users', [UserController::class, 'getMyGymUsers']);
     Route::get('admins/captains/info', [UserController::class, 'getAdminsOrCaptainsGym']);

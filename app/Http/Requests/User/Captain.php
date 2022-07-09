@@ -34,7 +34,6 @@ class Captain extends FormRequest
             'password' => 'required|string',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
             'city_id' => 'required|integer|exists:cities,id',
-            'gym_id' => 'required|string|exists:gyms,uuid',
             'gender' => 'required|string|max:255',
             'birthday' => 'nullable|string',
             'notes' => 'nullable|string',
