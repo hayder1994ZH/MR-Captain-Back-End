@@ -2,23 +2,23 @@
 namespace App\Repositories;
 
 use Carbon\Carbon;
-use App\Models\Cards;
-use App\Models\Subscription;
+use App\Models\CardsGym;
+use App\Models\SubscriptionsGym;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class SubscriptionRepository extends BaseRepository{
+class SubscriptionsGymRepository extends BaseRepository{
     public function __construct()
     {
-        parent::__construct(new Subscription());
+        parent::__construct(new SubscriptionsGym());
     }
     //Base repo to get card days by id
     public function getCard($id){
-        return Cards::findOrFail($id)->days;
+        return CardsGym::findOrFail($id)->days;
     }
 
     //Base repo to get card days by id
-    public function getLastSubscrip($id){
-        return $this->model->where('player_id', $id)->latest()->first();
+    public function getLastSubscrip($uuid){
+        return $this->model->where('gym_id', $uuid)->latest()->first();
     }
     //Base repo to get all items getLastSubscripDate
     public function mySubscription($take = 10){
