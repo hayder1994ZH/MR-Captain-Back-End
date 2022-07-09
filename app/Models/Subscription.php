@@ -32,6 +32,16 @@ class Subscription extends Model
         'expair_date' => 'datetime',
         'start_date' => 'datetime',
     ];
+    protected $appends = [
+        'number_of_days',
+    ];
+    public function getNumberOfDaysAttribute()
+    {
+        $start = new \DateTime($this->start_date);
+        $end = new \DateTime($this->expair_date);
+        $interval = $start->diff($end);
+        return $interval->format('%a');
+    }
 
     //relationships
     public function player()

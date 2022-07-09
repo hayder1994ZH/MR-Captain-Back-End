@@ -87,4 +87,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::apiResource('courses/days', 'CourseDayController');
     Route::apiResource('days/muscles', 'DayMuscleController');
     Route::apiResource('muscles/trainings', 'MuscleTrainingController');
+    Route::apiResource('dashboard/gym/cards', 'CardsGymController');
 });
