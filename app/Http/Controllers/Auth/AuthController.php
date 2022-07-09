@@ -54,7 +54,6 @@ class AuthController extends Controller
         //validations gym
         $gym = $request->validate([
             'gym_name' => 'required|string|max:255',
-            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'city_id' => 'required|integer|exists:cities,id',
         ]);
         DB::beginTransaction();//start transaction
