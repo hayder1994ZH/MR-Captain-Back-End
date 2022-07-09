@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use JWTAuth;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\SubscriptionsGym;
 use App\Http\Requests\Auth\Login;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\GymRepository;
@@ -14,15 +16,18 @@ use App\Repositories\AuthRepository;
 use App\Http\Requests\Auth\RegisterAdmin;
 use App\Http\Requests\Auth\UpdateProfile;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repositories\SubscriptionsGymRepository;
 
 class AuthController extends Controller
 {
     private $authRepo;
     private $gymRepo;
-    public function __construct(AuthRepository $authRepo, GymRepository $gymRepo)
+    private $subscriptionRepo;
+    public function __construct(AuthRepository $authRepo, GymRepository $gymRepo, SubscriptionsGymRepository $subscriptionRepo)
     {
         $this->authRepo = $authRepo;
         $this->gymRepo = $gymRepo;
+        $this->subscriptionRepo = $subscriptionRepo;
     }
  
     //Login
@@ -64,6 +69,10 @@ class AuthController extends Controller
             $gym['name'] = $request->gym_name;
             $newGym = $this->gymRepo->create($gym);
             $data['gym_id'] = $newGym->uuid;
+            $subscription['gym_id'] = $newGym->uuid;
+            $subscription['start_date'] = Carbon::now();
+            $subscription['expair_date'] = Carbon::now()->addDay(66);
+            $this->subscriptionRepo->create($subscription);
             $this->authRepo->create($data);
             $response = $this->authRepo->authenticate([
                 'phone' => $data['phone'],

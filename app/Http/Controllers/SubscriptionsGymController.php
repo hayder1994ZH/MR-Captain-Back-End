@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Helpers\Utilities;
 use Illuminate\Http\Request;
 use App\Models\SubscriptionsGym;
 use App\Http\Requests\Index\Pagination;
@@ -37,6 +38,13 @@ class SubscriptionsGymController extends Controller
      */
     public function getMySubscriptions(Pagination $request)
     {
+        if(!Utilities::admin()){
+            return response()->json([
+                'success' => false,
+                'message' => 'permission denied',
+
+            ], Response::HTTP_FORBIDDEN);
+        }
         $request->validated();
         return $this->SubscriptionsGymRepo->mySubscription($request->take);
     }
