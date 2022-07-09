@@ -36,7 +36,7 @@ class User extends Authenticatable implements JWTSubject
         'updated_at'
     ];
     protected $relations = [
-        'rule', 'gym', 'city', 'city.country'
+        'rule', 'gym', 'city', 'city.country', 'subscriptions', 'debts'
     ];
     protected $hidden = [
         'password',
@@ -82,6 +82,10 @@ class User extends Authenticatable implements JWTSubject
     }
     public function debts()
     {
-        return $this->hasMany(Debts::class, 'player_id');
+        return $this->hasMany(Debts::class, 'player_id')->where('price', '>', 0)->orderBy('created_at', 'desc');
+    }
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class, 'player_id')->orderBy('created_at', 'desc');
     }
 }
