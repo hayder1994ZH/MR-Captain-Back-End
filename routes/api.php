@@ -19,6 +19,7 @@ use App\Http\Controllers\DayMuscleController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\WeightHistoryController;
+use App\Http\Controllers\SubscriptionsGymController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -64,6 +65,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('my/course/days', [CourseDayController::class, 'getMyCourseDays']);
     Route::get('my/day/muscles', [DayMuscleController::class, 'getMyGymDayMuscles']);
     Route::get('my/muscle/trainings', [MuscleTrainingController::class, 'getMyGymMuscleTrainings']);
+    Route::get('my/subscriptions/gym', [SubscriptionsGymController::class, 'getMySubscriptions']);
     Route::get('my/hand/pay', [HandPayController::class, 'getMyDebts']);
     Route::get('total/my/purchases', [PurchaseController::class, 'getMyPurchaseTotalPrice']);
     Route::apiResource('user', 'UserController');
