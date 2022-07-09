@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Cards;
+namespace App\Http\Requests\SubscriptionsGym;
 
 use App\Helpers\Utilities;
 use Illuminate\Foundation\Http\FormRequest;
@@ -14,7 +14,7 @@ class Update extends FormRequest
      */
     public function authorize()
     {
-        if(!Utilities::admin() && !Utilities::captain()){
+        if(!Utilities::owner()){
             return false;
         }
         return true;
@@ -28,9 +28,11 @@ class Update extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'price' => 'required|string|max:255',
-            'days' => 'required|string|max:255',
+            'is_active' => 'boolean|in:0,1',
+            'is_sms' => 'boolean|in:0,1',
+            'is_whatsapp' => 'boolean|in:0,1',
+            'gym_id' => 'required|string|exists:gyms,uuid',
+            'card_id' => 'required|integer|exists:cards,id',
         ];
     }
 }

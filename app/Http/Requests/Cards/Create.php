@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Cards;
 
+use App\Helpers\Utilities;
 use Illuminate\Foundation\Http\FormRequest;
 
 class Create extends FormRequest
@@ -13,6 +14,9 @@ class Create extends FormRequest
      */
     public function authorize()
     {
+        if(!Utilities::admin() && !Utilities::captain()){
+            return false;
+        }
         return true;
     }
 
