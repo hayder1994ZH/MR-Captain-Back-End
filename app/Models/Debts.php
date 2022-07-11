@@ -10,7 +10,7 @@ class Debts extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id', 'details', 'price', 'user_id', 'gym_id', 'player_id', 'created_at', 'updated_at'
+        'id', 'details', 'price', 'total_price', 'user_id', 'gym_id', 'player_id', 'created_at', 'updated_at'
     ];
     protected function serializeDate(DateTimeInterface $date)
     {

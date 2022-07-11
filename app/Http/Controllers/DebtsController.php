@@ -37,7 +37,7 @@ class DebtsController extends Controller
     public function getMyDebts(Pagination $request)
     {
         $request->validated();
-        return $this->DebtsRepo->getListMyGymPlayer($request->take, $request->player_has_debts);
+        return $this->DebtsRepo->getListMyGymPlayer($request->take, $request->player_has_debts, $request->player_id);
     }
 
     /**
@@ -49,6 +49,7 @@ class DebtsController extends Controller
     public function store(Create $request)
     {
         $debt = $request->validated();
+        $debt['total_price'] = $debt['price'];
         $debt['user_id'] = auth()->user()->id;
         $debt['gym_id'] = auth()->user()->gym->uuid;
         $response = $this->DebtsRepo->create($debt);

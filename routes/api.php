@@ -34,7 +34,7 @@ use App\Http\Controllers\SubscriptionsGymController;
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/register/admin', [AuthController::class, 'registerAdmin']);
-Route::apiResource('city', 'CityController');//
+Route::apiResource('city', 'CityController');
 Route::apiResource('country', 'CountryController');
 Route::get('public/version/{version}', [VersionsController::class, 'getPublicVersion']);
 Route::group(['middleware' => ['auth']], function() {
@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('auth/profile', [AuthController::class, 'update']);
     Route::post('add/captain', [UserController::class, 'addCaptain']);
     Route::post('add/player', [UserController::class, 'addPlayer']);
+    Route::get('logout/player/{id}', [UserController::class, 'RemovePlayerFromGym']);
     Route::post('add/player/subscription', [UserController::class, 'storePlayerWithSubscription']);
     Route::post('add/admin', [UserController::class, 'addAdmin']);
     Route::get('my/gym/users', [UserController::class, 'getMyGymUsers']);

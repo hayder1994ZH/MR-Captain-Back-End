@@ -219,4 +219,26 @@ class UserController extends Controller
         $response = $this->UserRepo->create($data);
         return response()->json($response, 200);
     }
+
+    /**
+     * Remove player from gym.
+     *
+     * @param  \App\Models\Models\User  $User
+     * @return \Illuminate\Http\Response
+     */
+    public function RemovePlayerFromGym($id)
+    {
+        $checkPlayerExists =  $this->UserRepo->checkIfPlayerInMyGym($id);
+        if(!$checkPlayerExists){
+            return response()->json([
+                'success' => false,
+                'message' => 'Player not found',
+            ], Response::HTTP_BAD_REQUEST);
+        }
+        $this->UserRepo->LogoutFromGym($id);
+        return response()->json([
+            'success' => true,
+            'message' => 'Player logout successfully',
+        ], Response::HTTP_OK);
+    }
 }
