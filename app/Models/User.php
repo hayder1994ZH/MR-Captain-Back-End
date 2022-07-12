@@ -88,4 +88,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Subscription::class, 'player_id')->orderBy('created_at', 'desc');
     }
+    public function lastSubscription()
+    {
+        return $this->hasOne(Subscription::class, 'player_id')->latest();
+    }
 }

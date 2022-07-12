@@ -26,7 +26,7 @@ class Update extends FormRequest
         $id = $this->route('user');
         return [
             'name' => 'string',
-            'phone' => 'string|min:11|max:11|unique:users,phone',
+            'phone' => 'string|unique:users,phone,'.$id,
             'password' => 'string',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
             'rule_id' => 'integer|exists:rules,id',

@@ -25,7 +25,7 @@ class Update extends FormRequest
     {
         return [
             'name' => 'string',
-            'image' => 'image|mimes:png,jpg,jpeg',
+            'image' => 'image|mimes:png,jpg,jpeg,webp',
             'music' => 'file|mimes:mp3',
             'url' => 'string'
         ];
