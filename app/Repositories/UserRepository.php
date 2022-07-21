@@ -29,51 +29,26 @@ class UserRepository extends BaseRepository{
         return $result->paginate($take);
     } 
     public function getListMyGymPlayers($take = 10, $current_day = null, $player_not_expaired = null, $player_expaired = null, $player_has_debt = null){
-        
         $result = QueryBuilder::for($this->model)
                                 ->allowedIncludes($this->getRelationMethod())
                                 ->allowedFilters($this->getProperties())
                                 ->allowedSorts($this->getProperties())
                                 ->where('rule_id', 5);
-                                if(!auth()->user()->gym->uuid){
-                                    $result->where('id', auth()->user()->id);
+                                if(auth()->user()->gym->uuid){
+                                    $result->where('gym_id', auth()->user()->gym->uuid);
                                 }
                                 if($current_day){
-                                    $result->whereHas('lastSubscription', function($query){
-                                        $query->latest()->whereDate('start_date', '=', Carbon::today()->format('Y-m-d h:i:s'));
-                                        if(!auth()->user()->gym->uuid){
-                                            $query->where('id', auth()->user()->id);
-                                        }else{
-                                            $query->where('gym_id', auth()->user()->gym->uuid);
-                                        }
-                                        return $query;
-                                    });
+                                    $result->whereHas('todaySubscription');
                                 }
                                 if($player_not_expaired){
-                                    $result->whereHas('lastSubscription', function($query){
-                                       $query->whereDate('expair_date', '<=', Carbon::today()->format('Y-m-d h:i:s'));
-                                       if(!auth()->user()->gym->uuid){
-                                            $query->where('id', auth()->user()->id);
-                                        }else{
-                                            $query->where('gym_id', auth()->user()->gym->uuid);
-                                        }
-                                        return $query;
-                                    });
+                                    $result->whereHas('notExpireSubscription');
                                 }
                                 if($player_expaired){
-                                    $result->whereHas('lastSubscription', function($query){
-                                        $query->whereDate('expair_date', '>', Carbon::today()->format('Y-m-d h:i:s'));
-                                        if(!auth()->user()->gym->uuid){
-                                             $query->where('id', auth()->user()->id);
-                                         }else{
-                                             $query->where('gym_id', auth()->user()->gym->uuid);
-                                         }
-                                         return $query;
-                                    });
+                                    $result->doesntHave('expireSubscription');
                                 }
-                                // if($player_has_debt){
-                                //     $result->whereHas('debts');
-                                // }
+                                if($player_has_debt){
+                                    $result->whereHas('debts');
+                                }
         return $result->paginate($take);
     } 
 

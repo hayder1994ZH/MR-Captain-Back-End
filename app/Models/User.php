@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Helpers\Utilities;
 use App\Models\RelationshipsTrait;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -36,7 +39,7 @@ class User extends Authenticatable implements JWTSubject
         'updated_at'
     ];
     protected $relations = [
-        'rule', 'gym', 'city', 'city.country', 'subscriptions', 'debts'
+        'rule', 'gym', 'city', 'city.country', 'subscriptions', 'debts', 'userSubscriptions'
     ];
     protected $hidden = [
         'password',
@@ -84,12 +87,26 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Debts::class, 'player_id')->where('price', '>', 0)->orderBy('created_at', 'desc');
     }
+    public function userSubscriptions()
+    {
+        return $this->hasMany(Subscription::class, 'player_id');
+    }
     public function subscriptions()
     {
-        return $this->hasMany(Subscription::class, 'player_id')->orderBy('created_at', 'desc');
+        return $this->hasMany(Subscription::class, 'player_id')->where('gym_id', auth()->user()->gym->uuid);
     }
-    public function lastSubscription()
+    public function notExpireSubscription()
     {
-        return $this->hasOne(Subscription::class, 'player_id')->latest();
+        return $this->hasOne(Subscription::class, 'player_id')->latest()->whereDate("expair_date", '>', Carbon::today())
+                                                              ->where('gym_id', auth()->user()->gym->uuid);
+    }
+    public function expireSubscription()
+    {
+        return $this->hasOne(Subscription::class, 'player_id')->latest()->whereDate("expair_date", '>', Carbon::today())
+                                                              ->where('gym_id', auth()->user()->gym->uuid);
+    }
+    public function todaySubscription()
+    {
+        return $this->hasMany(Subscription::class, 'player_id')->whereDate("start_date", '=', Carbon::today())->where('gym_id', auth()->user()->gym->uuid)->latest();
     }
 }
