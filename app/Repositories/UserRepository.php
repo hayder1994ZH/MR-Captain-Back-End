@@ -33,10 +33,8 @@ class UserRepository extends BaseRepository{
                                 ->allowedIncludes($this->getRelationMethod())
                                 ->allowedFilters($this->getProperties())
                                 ->allowedSorts($this->getProperties())
-                                ->where('rule_id', 5);
-                                if(auth()->user()->gym->uuid){
-                                    $result->where('gym_id', auth()->user()->gym->uuid);
-                                }
+                                ->where('rule_id', 5)
+                                ->where('gym_id', auth()->user()->gym->uuid);
                                 if($current_day){
                                     $result->whereHas('todaySubscription');
                                 }
