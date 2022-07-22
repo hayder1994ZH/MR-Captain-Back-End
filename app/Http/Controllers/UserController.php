@@ -93,6 +93,7 @@ class UserController extends Controller
         try {
             $user['password'] = bcrypt($request->password);
             $user['rule_id'] = 5;
+            $user['gym_id'] = auth()->user()->gym->uuid;
             if($request->hasFile('image')){
                 $user['image'] = $request->file('image')->store('avatars');
             }
